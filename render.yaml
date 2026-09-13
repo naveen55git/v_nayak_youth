@@ -3,10 +3,11 @@ services:
     name: vnayak-youth-portal
     runtime: python
     plan: free
-    buildCommand: "./build.sh"
+    buildCommand: "chmod +x build.sh && ./build.sh"
     startCommand: "gunicorn vnayak_portal.wsgi:application"
     envVars:
       - key: SECRET_KEY
         generateValue: true
       - key: WEB_CONCURRENCY
-        value: 4
+        value: 2
+
