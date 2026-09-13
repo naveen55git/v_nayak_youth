@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block title %}Sponsor Community - V.NAYAK YOUTH ASSOCIATION{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  
+  <div class="text-center max-w-2xl mx-auto mb-10">
+    <span class="text-xs font-bold uppercase tracking-widest text-amber-400 font-id">Youth Community Sponsorship</span>
+    <h2 class="text-2xl sm:text-4xl font-black text-white font-heading mt-1">Support Madharam Youth</h2>
+    <p class="text-slate-400 text-xs sm:text-sm mt-2">Every contribution directly empowers rural youth sports leagues, emergency blood services, and cultural festivals.</p>
+  </div>
+
+  <!-- Payment Recipient Spotlight Card -->
+  <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl mb-10 relative overflow-hidden">
+    <div class="absolute -right-12 -bottom-12 w-52 h-52 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+      <div class="space-y-4 text-center md:text-left">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold font-id">
+          <i class="fa-solid fa-circle-check"></i> OFFICIAL PAYMENT RECIPIENT
+        </div>
+
+        <div>
+          <span class="text-xs text-slate-400 uppercase font-bold tracking-wider block">Authorized Coordinator Name</span>
+          <h3 class="text-2xl sm:text-3xl font-black text-white font-heading">Mood bhanu Prasad</h3>
+        </div>
+
+        <div class="p-4 bg-slate-950/80 rounded-2xl border border-slate-800 inline-block">
+          <span class="text-xs text-slate-400 uppercase font-bold block mb-1">Primary Payment Number:</span>
+          <div class="flex items-center gap-3">
+            <span class="text-2xl sm:text-3xl font-black text-amber-400 font-mono tracking-wider">91008 94417</span>
+            <button onclick="copyPaymentNumber('9100894417')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs text-white rounded-lg border border-slate-700 transition">
+              <i class="fa-solid fa-copy mr-1"></i> Copy
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-1">
+          <span class="px-3 py-1 bg-blue-500/15 border border-blue-500/30 rounded-lg text-blue-400 text-xs font-bold">
+            <i class="fa-brands fa-google-pay mr-1"></i> GPay
+          </span>
+          <span class="px-3 py-1 bg-purple-500/15 border border-purple-500/30 rounded-lg text-purple-400 text-xs font-bold">
+            PhonePe
+          </span>
+          <span class="px-3 py-1 bg-sky-500/15 border border-sky-500/30 rounded-lg text-sky-400 text-xs font-bold">
+            Paytm
+          </span>
+        </div>
+      </div>
+
+      <!-- Quick QR Code Mockup Visual -->
+      <div class="p-5 bg-white rounded-2xl shadow-xl flex flex-col items-center shrink-0 border-4 border-amber-500/40 text-slate-900">
+        <div class="w-40 h-40 bg-slate-100 rounded-xl flex items-center justify-center border border-slate-300 relative overflow-hidden">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=9100894417@upi&pn=Mood%20Bhanu%20Prasad&cu=INR" alt="UPI QR Code" class="w-36 h-36">
+        </div>
+        <span class="text-[11px] font-black uppercase tracking-wider text-slate-800 mt-2 font-display">Scan & Pay Any UPI App</span>
+        <span class="text-[9px] font-mono text-slate-500">9100894417@upi</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sponsor Submission Form -->
+  <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl mb-12">
+    <h3 class="text-xl font-black text-white font-heading mb-1 flex items-center gap-2">
+      <i class="fa-solid fa-receipt text-amber-400"></i> Submit Your Contribution Details
+    </h3>
+    <p class="text-xs text-slate-400 mb-6">After sending money via GPay, PhonePe, or Paytm, please submit your screenshot below for public honor roll recognition.</p>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-4">
+      {% csrf_token %}
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Sponsor Full Name *</label>
+          {{ form.name }}
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Phone Number *</label>
+          {{ form.phone }}
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Amount Sent (₹) *</label>
+          {{ form.amount }}
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Payment Screenshot / Receipt Image</label>
+        {{ form.screenshot }}
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Optional Message / Purpose</label>
+        {{ form.message }}
+      </div>
+
+      <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:brightness-110 text-slate-950 font-black rounded-xl text-sm transition font-display uppercase tracking-wider shadow-lg shadow-emerald-500/20">
+        <i class="fa-solid fa-paper-plane mr-1.5"></i> Submit Sponsor Receipt
+      </button>
+    </form>
+  </div>
+
+  <!-- Verified Community Sponsors List -->
+  <div class="bg-slate-900/70 border border-slate-800 rounded-3xl p-6 shadow-xl">
+    <h3 class="text-base font-bold text-white mb-4 flex items-center justify-between border-b border-slate-800 pb-3">
+      <span><i class="fa-solid fa-trophy text-amber-400 mr-2"></i> Community Honor Roll of Sponsors</span>
+      <span class="text-xs text-amber-400 font-mono font-bold">Total Raised: ₹{{ total_raised }}</span>
+    </h3>
+    <div class="space-y-3">
+      {% for sp in sponsors %}
+        <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm font-black">
+              ₹
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">{{ sp.name }}</h4>
+              <p class="text-xs text-slate-400">{{ sp.message|default:"Madharam Youth Welfare" }}</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-base font-black text-emerald-400 font-mono">₹{{ sp.amount }}</span>
+            <span class="text-[10px] text-slate-500 block">{{ sp.created_at|date:"d M Y" }}</span>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-xs text-slate-400 text-center py-6">No sponsors recorded yet. Be the first to sponsor!</p>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function copyPaymentNumber(number) {
+    navigator.clipboard.writeText(number).then(() => {
+      alert("Payment number copied: " + number);
+    });
+  }
+</script>
+{% endblock %}

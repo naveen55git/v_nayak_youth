@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: vnayak-youth-portal
+    runtime: python
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn vnayak_portal.wsgi:application"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4

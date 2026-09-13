@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mobile OTP Login - V.NAYAK YOUTH MADHARAM{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto px-4 py-12">
+  <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 rounded-full border-2 border-amber-500 mx-auto mb-3 shadow-lg overflow-hidden flex items-center justify-center bg-slate-950">
+        <img src="{% static 'images/logo2.jpg' %}" alt="V Nayak Youth Madharam Emblem" class="w-full h-full object-cover">
+      </div>
+      <h2 class="text-2xl font-black text-white font-heading">Youth Portal Login</h2>
+      <p class="text-xs text-amber-400 mt-1 font-id tracking-wider">V.NAYAK YOUTH MADHARAM</p>
+      <p class="text-xs text-slate-400 mt-1">Instant passwordless login via mobile verification</p>
+    </div>
+
+    {% if form.errors %}
+      <div class="mb-5 p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs">
+        {% for field in form %}
+          {% for error in field.errors %}
+            <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-exclamation"></i> {{ error }}</div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Registered Mobile Number *</label>
+        <div class="relative">
+          <span class="absolute left-3.5 top-3 text-amber-400 text-xs font-mono font-bold">+91</span>
+          <input type="tel" name="phone_number" value="{{ form.phone_number.value|default:'' }}" maxlength="10" required autofocus placeholder="10 Digit Mobile Number" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-12 pr-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+        </div>
+        <p class="text-[11px] text-slate-400 mt-1.5">
+          Enter the 10-digit mobile number linked to your youth account.
+        </p>
+      </div>
+
+      <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 font-black rounded-xl text-sm shadow-lg shadow-orange-500/25 transition font-display uppercase tracking-wider flex items-center justify-center gap-2">
+        <i class="fa-solid fa-paper-plane"></i> Send 6-Digit OTP Code
+      </button>
+    </form>
+
+    <div class="mt-6 pt-5 border-t border-slate-800 text-center">
+      <p class="text-xs text-slate-400 mb-2">New youth member in Madharam village?</p>
+      <a href="{% url 'register' %}" class="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-semibold text-xs rounded-xl transition">
+        <i class="fa-solid fa-user-plus"></i> Create New Registration
+      </a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

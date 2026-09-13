@@ -1,0 +1,2368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>V.NAYAK YOUTH ASSOCIATION - Official Portal</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Dancing+Script:wght@700&family=Great+Vibes&family=Inter:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- JsBarcode for Member ID Barcodes -->
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+
+  <!-- html2canvas for Downloadable ID Cards -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#ea580c',
+              amber: '#f59e0b',
+              gold: '#d97706',
+              navy: '#0b1329',
+              dark: '#030712'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Cinzel', 'serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            id: ['Rajdhani', 'sans-serif'],
+            signature: ['Dancing Script', 'cursive']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .bg-grid-glow {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+    }
+    .captcha-badge {
+      letter-spacing: 6px;
+      user-select: none;
+      background: repeating-linear-gradient(45deg, #090e1a, #090e1a 10px, #1e293b 10px, #1e293b 20px);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 10px rgba(245, 158, 11, 0.6);
+    }
+    .id-card-spec {
+      width: 340px;
+      min-height: 535px;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #printAreaContainer, #printAreaContainer * {
+        visibility: visible !important;
+      }
+      #printAreaContainer {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: auto;
+        padding: 10mm;
+        margin: 0;
+        background: #ffffff !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        gap: 15mm !important;
+        z-index: 999999;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-slate-950 bg-grid-glow relative">
+
+  <div class="bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 text-slate-950 text-xs font-bold py-1.5 px-4 shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="bg-slate-950 text-amber-400 px-2 py-0.5 rounded text-[10px] tracking-wider uppercase font-black">Official</span>
+        <span>V.NAYAK YOUTH ASSOCIATION • ST-Colony, Madharam Village</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs font-semibold">
+        <span class="flex items-center gap-1.5">
+          <i class="fa-solid fa-phone text-slate-950"></i> Helplines: 
+          <a href="tel:9347624977" class="hover:underline font-bold text-slate-950">9347624977</a> | 
+          <a href="tel:9100894417" class="hover:underline font-bold text-slate-950">9100894417</a>
+        </span>
+        <span class="hidden md:inline-flex items-center gap-1">
+          <i class="fa-solid fa-envelope text-slate-950"></i> mrwhitedevil2003@gmail.com
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <header class="bg-slate-950/90 backdrop-blur-md border-b border-amber-500/20 shadow-xl sticky top-8 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo Branding -->
+      <div class="flex items-center gap-3 cursor-pointer select-none" onclick="navigateTab('home')">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-orange-600 to-yellow-400 flex items-center justify-center text-slate-950 font-black text-2xl shadow-lg shadow-orange-500/30 shrink-0">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div>
+          <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 block font-id leading-tight">YOUTH EMPOWERMENT • MADHARAM</span>
+          <h1 class="text-base sm:text-xl font-black tracking-tight text-white flex items-center gap-1 font-heading">
+            V.NAYAK YOUTH <span class="text-amber-400">ASSOCIATION</span>
+          </h1>
+        </div>
+      </div>
+
+      <!-- Navigation Actions -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Guest View Group -->
+        <div id="navGuestActions" class="flex items-center gap-2 sm:gap-3">
+          <button onclick="navigateTab('home')" class="hidden md:inline-flex px-3 py-2 text-xs font-semibold text-slate-300 hover:text-amber-400 transition">
+            <i class="fa-solid fa-house mr-1"></i> Home
+          </button>
+          <button onclick="navigateTab('gallery')" class="hidden sm:inline-flex px-3 py-2 text-xs font-semibold text-slate-300 hover:text-amber-400 transition">
+            <i class="fa-solid fa-images mr-1"></i> Gallery
+          </button>
+          <button onclick="navigateTab('festivals')" class="hidden sm:inline-flex px-3 py-2 text-xs font-semibold text-slate-300 hover:text-amber-400 transition">
+            <i class="fa-solid fa-calendar-day mr-1"></i> Festivals
+          </button>
+          <button onclick="navigateTab('sponsor')" class="hidden lg:inline-flex px-3 py-2 text-xs font-semibold text-amber-300 bg-amber-500/10 rounded-xl hover:bg-amber-500/20 border border-amber-500/30 transition">
+            <i class="fa-solid fa-hand-holding-dollar mr-1"></i> Sponsor Us
+          </button>
+          <button onclick="openAdminLoginModal()" class="px-3 py-2 text-xs font-bold text-slate-300 hover:text-white bg-slate-900 border border-slate-700 hover:border-amber-400 rounded-xl transition flex items-center gap-1">
+            <i class="fa-solid fa-user-shield text-amber-400"></i> Admin
+          </button>
+          <button onclick="openLoginModal()" class="px-4 py-2 text-xs sm:text-sm font-black bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 rounded-xl shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-0.5 flex items-center gap-1.5">
+            <i class="fa-solid fa-right-to-bracket"></i> Login
+          </button>
+        </div>
+
+        <!-- Authenticated Member Group -->
+        <div id="navMemberActions" class="hidden items-center gap-2 sm:gap-3">
+          <button onclick="navigateTab('home')" class="px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-amber-400">
+            <i class="fa-solid fa-house mr-1"></i> Home
+          </button>
+          <button onclick="navigateTab('profile')" class="px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-amber-400">
+            <i class="fa-solid fa-user-gear mr-1"></i> Profile
+          </button>
+          <button onclick="navigateTab('membership')" class="px-3.5 py-1.5 text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-xl hover:bg-amber-500/30 flex items-center gap-1">
+            <i class="fa-solid fa-id-card"></i> Membership
+          </button>
+          <button onclick="navigateTab('complaints')" class="px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-rose-400">
+            <i class="fa-solid fa-triangle-exclamation mr-1"></i> Complaint
+          </button>
+
+          <div class="flex items-center gap-2 pl-2 border-l border-slate-800">
+            <div id="navUserAvatar" class="w-8 h-8 rounded-full overflow-hidden border border-amber-500 bg-amber-600/30 flex items-center justify-center text-xs font-black text-white">
+              U
+            </div>
+            <button onclick="handleLogout()" title="Logout" class="px-3 py-1.5 text-xs font-semibold bg-rose-500/20 text-rose-300 hover:bg-rose-500 hover:text-white rounded-xl transition">
+              <i class="fa-solid fa-power-off"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Authenticated Admin Group -->
+        <div id="navAdminActions" class="hidden items-center gap-2">
+          <span class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-300 border border-red-500/40 text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+            <i class="fa-solid fa-crown text-amber-400"></i> Admin Panel
+          </span>
+          <button onclick="navigateTab('adminPanel')" class="px-3 py-1.5 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl border border-slate-700">
+            Dashboard
+          </button>
+          <button onclick="handleAdminLogout()" title="Exit Admin" class="px-3 py-1.5 text-xs font-semibold bg-rose-500/20 text-rose-300 hover:bg-rose-500 hover:text-white rounded-xl">
+            <i class="fa-solid fa-power-off"></i>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Interactive Toast Stack -->
+  <div id="toastContainer" class="fixed top-24 right-4 sm:right-6 z-50 flex flex-col gap-2.5 max-w-md w-full pointer-events-none"></div>
+
+  <main class="flex-grow">
+    
+    <!-- ================= SECTION 1: HOME & WELCOME ================= -->
+    <section id="tabHome" class="app-tab">
+      
+      <!-- Hero Banner -->
+      <div class="relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 pt-10 pb-20 border-b border-amber-500/20">
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/2 -right-32 w-96 h-96 bg-orange-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+            
+            <div class="max-w-2xl text-center lg:text-left space-y-6">
+              <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-wider">
+                <i class="fa-solid fa-fire text-amber-400"></i> Empowering Madharam Village Youth • ST-Colony
+              </div>
+
+              <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight font-heading">
+                V.NAYAK YOUTH <br/>
+                <span class="bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-300 bg-clip-text text-transparent">ASSOCIATION</span>
+              </h1>
+
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-amber-500/30 text-xs sm:text-sm text-slate-300 leading-relaxed shadow-xl">
+                <div class="flex items-center gap-2 text-amber-400 font-bold mb-1">
+                  <i class="fa-solid fa-bullhorn"></i> Official Youth Association Mission
+                </div>
+                <p>Welcome to the official village portal for V.NAYAK YOUTH ASSOCIATION, Madharam. Dedicated to unity, youth sports leagues, cultural festivals, emergency blood coordination, and community welfare. Register your profile and apply for your verified 6-year PVC membership card.</p>
+              </div>
+
+              <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                <button onclick="openRegistrationModal()" class="w-full sm:w-auto px-7 py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 shadow-xl shadow-orange-500/30 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 font-display">
+                  <i class="fa-solid fa-user-plus"></i> New Youth Registration
+                </button>
+                <button onclick="openLoginModal()" class="w-full sm:w-auto px-7 py-3.5 rounded-xl font-bold text-sm bg-slate-900 hover:bg-slate-800 text-white border border-amber-500/40 hover:border-amber-400 transition flex items-center justify-center gap-2 font-display">
+                  <i class="fa-solid fa-right-to-bracket text-amber-400"></i> Youth Login
+                </button>
+                <button onclick="navigateTab('sponsor')" class="w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold text-sm bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 transition flex items-center justify-center gap-2 font-display">
+                  <i class="fa-solid fa-heart-circle-bolt text-emerald-400"></i> Sponsor Us
+                </button>
+              </div>
+
+              <!-- Contact Helpline Pill -->
+              <div class="pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-5 text-xs text-slate-400">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-location-dot text-amber-400"></i>
+                  <span>ST-Colony, Madharam, Singareni MLD - 507122</span>
+                </div>
+                <div class="flex items-center gap-2 text-amber-300 font-mono">
+                  <i class="fa-solid fa-phone"></i>
+                  <span>9347624977 / 9100894417</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hero Feature Panel -->
+            <div class="w-full max-w-sm">
+              <div class="relative group">
+                <div class="absolute -inset-2 bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition duration-700"></div>
+                <div class="relative rounded-3xl bg-slate-900 border border-amber-500/30 p-6 sm:p-8 text-center space-y-4 shadow-2xl">
+                  <div class="w-20 h-20 mx-auto rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-4xl border border-amber-500/30 shadow-inner">
+                    <i class="fa-solid fa-hands-holding-circle"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-white font-heading">Youth Unity & Strength</h3>
+                  <p class="text-xs text-slate-400 leading-relaxed">
+                    Exclusive digital portal for Madharam village youth. Apply for your authentic PVC membership card with scannable barcode and authorized signature.
+                  </p>
+                  
+                  <div class="pt-2 border-t border-slate-800 space-y-2 text-left text-xs text-slate-300">
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 6-Year Official Tenure Support</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Scannable Membership Barcode</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Festival & Sports Sponsorships</div>
+                  </div>
+
+                  <div class="pt-2">
+                    <button onclick="navigateTab('membership')" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500 hover:to-orange-500 text-amber-300 hover:text-slate-950 border border-amber-500/40 text-xs font-bold transition flex items-center justify-center gap-2">
+                      <i class="fa-solid fa-id-card"></i> Check Membership Portal
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 border-b border-slate-800 pb-4">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-amber-400 font-id">Live Announcements & Portal Features</span>
+            <h2 class="text-2xl font-black text-white font-heading mt-1">Upcoming Updates & Community Links</h2>
+          </div>
+          <div class="text-xs text-slate-400">
+            Updated regularly by Admin • Singareni MLD Division
+          </div>
+        </div>
+
+        <div id="featuresListContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- Quick Action Modules Showcase -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          
+          <div onclick="navigateTab('membership')" class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/50 cursor-pointer transition group shadow-lg">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+              <i class="fa-solid fa-id-card-clip"></i>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">6-Year ID Membership</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Apply, preview, download and print your official association PVC ID card.</p>
+          </div>
+
+          <div onclick="navigateTab('festivals')" class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/50 cursor-pointer transition group shadow-lg">
+            <div class="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+              <i class="fa-solid fa-om"></i>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">Festival Celebrations</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">View upcoming events, Sant Sevalal Maharaj Jayanti, Teej, and submit fest details.</p>
+          </div>
+
+          <div onclick="navigateTab('sponsor')" class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/50 cursor-pointer transition group shadow-lg">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+              <i class="fa-solid fa-hand-holding-dollar"></i>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">Sponsor Community</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Direct UPI payment to Mood bhanu Prasad (91008 94417) and submit receipt.</p>
+          </div>
+
+          <div onclick="navigateTab('complaints')" class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/50 cursor-pointer transition group shadow-lg">
+            <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+              <i class="fa-solid fa-bullhorn"></i>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">Youth Grievances</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Raise village youth issues and sports ground concerns directly to the committee.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= SECTION 2: PHOTO GALLERY ================= -->
+    <section id="tabGallery" class="app-tab hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 border-b border-slate-800 pb-5">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-400 font-id">Youth Community Moments</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-white font-heading">Association Photo Gallery</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">Glimpses of youth sports tournaments, social work, and festivals in Madharam.</p>
+        </div>
+
+        <div>
+          <button onclick="openAddImageModal()" class="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-110 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-2 shadow-lg shadow-orange-500/20 font-display">
+            <i class="fa-solid fa-camera-retro"></i> Add New Image
+          </button>
+        </div>
+      </div>
+
+      <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        <!-- Gallery cards populated dynamically -->
+      </div>
+    </section>
+
+    <!-- ================= SECTION 3: FESTIVAL DETAILS ================= -->
+    <section id="tabFestivals" class="app-tab hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 border-b border-slate-800 pb-5">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-400 font-id">Culture & Heritage</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-white font-heading">Village Festivals & Celebrations</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">Official event updates, celebration guidelines, and program photos.</p>
+        </div>
+
+        <div>
+          <button onclick="openAddFestivalModal()" class="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-110 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-2 shadow-lg font-display">
+            <i class="fa-solid fa-calendar-plus"></i> Add Festival Info
+          </button>
+        </div>
+      </div>
+
+      <div id="festivalListGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Festivals populated dynamically -->
+      </div>
+    </section>
+
+    <!-- ================= SECTION 4: SPONSOR / DONATIONS ================= -->
+    <section id="tabSponsor" class="app-tab hidden max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-400 font-id">Youth Community Sponsorship</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white font-heading mt-1">Support Madharam Youth</h2>
+        <p class="text-slate-400 text-xs sm:text-sm mt-2">Every contribution empowers rural youth sports, emergency blood services, and festival events.</p>
+      </div>
+
+      <!-- Payment Recipient Spotlight Card -->
+      <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl mb-10 relative overflow-hidden">
+        <div class="absolute -right-12 -bottom-12 w-52 h-52 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+          <div class="space-y-4 text-center md:text-left">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold font-id">
+              <i class="fa-solid fa-circle-check"></i> OFFICIAL PAYMENT RECIPIENT
+            </div>
+
+            <div>
+              <span class="text-xs text-slate-400 uppercase font-bold tracking-wider block">Authorized Coordinator Name</span>
+              <h3 class="text-2xl sm:text-3xl font-black text-white font-heading">Mood bhanu Prasad</h3>
+            </div>
+
+            <div class="p-4 bg-slate-950/80 rounded-2xl border border-slate-800 inline-block">
+              <span class="text-xs text-slate-400 uppercase font-bold block mb-1">Primary Payment Number:</span>
+              <div class="flex items-center gap-3">
+                <span class="text-2xl sm:text-3xl font-black text-amber-400 font-mono tracking-wider">91008 94417</span>
+                <button onclick="copyToClipboard('9100894417', 'Payment number copied!')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs text-white rounded-lg border border-slate-700">
+                  <i class="fa-solid fa-copy mr-1"></i> Copy
+                </button>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-1">
+              <span class="px-3 py-1 bg-blue-500/15 border border-blue-500/30 rounded-lg text-blue-400 text-xs font-bold">
+                <i class="fa-brands fa-google-pay mr-1"></i> GPay
+              </span>
+              <span class="px-3 py-1 bg-purple-500/15 border border-purple-500/30 rounded-lg text-purple-400 text-xs font-bold">
+                PhonePe
+              </span>
+              <span class="px-3 py-1 bg-sky-500/15 border border-sky-500/30 rounded-lg text-sky-400 text-xs font-bold">
+                Paytm
+              </span>
+            </div>
+          </div>
+
+          <!-- Quick QR Code Mockup Visual -->
+          <div class="p-5 bg-white rounded-2xl shadow-xl flex flex-col items-center shrink-0 border-4 border-amber-500/40 text-slate-900">
+            <div class="w-40 h-40 bg-slate-100 rounded-xl flex items-center justify-center border border-slate-300 relative overflow-hidden">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=9100894417@upi&pn=Mood%20Bhanu%20Prasad&cu=INR" alt="UPI QR Code" class="w-36 h-36">
+            </div>
+            <span class="text-[11px] font-black uppercase tracking-wider text-slate-800 mt-2 font-display">Scan & Pay Any UPI App</span>
+            <span class="text-[9px] font-mono text-slate-500">9100894417@upi</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sponsor Submission Form -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl mb-12">
+        <h3 class="text-xl font-black text-white font-heading mb-1 flex items-center gap-2">
+          <i class="fa-solid fa-receipt text-amber-400"></i> Submit Your Contribution Details
+        </h3>
+        <p class="text-xs text-slate-400 mb-6">After sending money via GPay, PhonePe, or Paytm, please submit the details and screenshot below for public recognition.</p>
+
+        <form id="sponsorForm" onsubmit="handleSponsorSubmit(event)" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Sponsor Full Name *</label>
+              <input type="text" id="spName" required placeholder="e.g. Ramesh Rathod" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Phone Number *</label>
+              <input type="tel" id="spPhone" required pattern="[0-9]{10}" placeholder="10-digit number" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Amount Sent (₹) *</label>
+              <input type="number" id="spAmount" required min="1" placeholder="Amount in INR" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Payment Screenshot / Receipt Image *</label>
+            <input type="file" id="spScreenshot" accept="image/*" required onchange="previewSponsorScreenshot(event)" class="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-800 file:text-amber-300 hover:file:bg-slate-700 bg-slate-950 p-2 rounded-xl border border-slate-800">
+            <div id="spScreenshotPreview" class="mt-3 hidden">
+              <img src="" id="spPreviewImg" class="w-32 h-32 object-cover rounded-xl border border-amber-500/40">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Optional Message / Purpose</label>
+            <input type="text" id="spMessage" placeholder="e.g. For Cricket tournament / Jayanti celebration" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+          </div>
+
+          <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:brightness-110 text-slate-950 font-black rounded-xl text-sm transition font-display uppercase tracking-wider shadow-lg shadow-emerald-500/20">
+            <i class="fa-solid fa-paper-plane mr-1.5"></i> Submit Sponsor Receipt
+          </button>
+        </form>
+      </div>
+
+      <!-- Verified Community Sponsors List -->
+      <div class="bg-slate-900/70 border border-slate-800 rounded-3xl p-6 shadow-xl">
+        <h3 class="text-base font-bold text-white mb-4 flex items-center justify-between border-b border-slate-800 pb-3">
+          <span><i class="fa-solid fa-trophy text-amber-400 mr-2"></i> Community Honor Roll of Sponsors</span>
+          <span class="text-xs text-amber-400" id="sponsorTotalCounter">Total: ₹0</span>
+        </h3>
+        <div id="sponsorList" class="space-y-3">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= SECTION 5: COMPLAINTS / GRIEVANCE ================= -->
+    <section id="tabComplaints" class="app-tab hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="text-center max-w-xl mx-auto mb-8">
+        <span class="text-xs font-bold uppercase tracking-widest text-rose-400 font-id">Youth Redressal & Help</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-white font-heading mt-1">Submit Youth Grievance / Complaint</h2>
+        <p class="text-slate-400 text-xs sm:text-sm mt-1">Village sports issues, ST-Colony sanitation, or youth welfare concerns.</p>
+      </div>
+
+      <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl mb-10">
+        <form id="complaintForm" onsubmit="handleComplaintSubmit(event)" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Your Name / User ID *</label>
+              <input type="text" id="cpName" required placeholder="Enter name or ID" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Contact Phone *</label>
+              <input type="tel" id="cpPhone" required pattern="[0-9]{10}" placeholder="10-digit phone" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Complaint Subject *</label>
+            <input type="text" id="cpSubject" required placeholder="e.g. Ground maintenance / Drinking water near community hall" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Detailed Grievance in Text *</label>
+            <textarea id="cpDescription" rows="4" required placeholder="Describe the problem clearly..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 transition"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Attach Photo / Screenshot (Optional)</label>
+            <input type="file" id="cpImage" accept="image/*" class="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-800 file:text-amber-300 hover:file:bg-slate-700 bg-slate-950 p-2 rounded-xl border border-slate-800">
+          </div>
+
+          <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-rose-500 to-red-600 hover:brightness-110 text-white font-black rounded-xl text-sm transition font-display uppercase tracking-wider shadow-lg shadow-rose-500/25">
+            <i class="fa-solid fa-bullhorn mr-1.5"></i> Lodge Official Grievance
+          </button>
+        </form>
+      </div>
+
+      <!-- Member Complaints Stream -->
+      <div class="space-y-4">
+        <h3 class="text-base font-bold text-white border-b border-slate-800 pb-2">Recent Community Grievances</h3>
+        <div id="complaintFeed" class="space-y-3">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 6: USER PROFILE ================= -->
+    <section id="tabProfile" class="app-tab hidden max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-black text-white font-heading">Youth Member Profile</h2>
+            <p class="text-xs text-slate-400">Manage your association personal details and profile avatar.</p>
+          </div>
+          <span class="px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-bold font-mono" id="profUserIdDisplay">@user</span>
+        </div>
+
+        <form id="profileForm" onsubmit="handleProfileUpdate(event)" class="space-y-5">
+          <!-- Avatar Picture Upload -->
+          <div class="flex flex-col sm:flex-row items-center gap-6 p-4 bg-slate-950 rounded-2xl border border-slate-800">
+            <div class="w-24 h-24 rounded-2xl overflow-hidden border-2 border-amber-500 shadow-md relative bg-slate-900 flex items-center justify-center shrink-0">
+              <img id="profAvatarPreview" src="" class="w-full h-full object-cover hidden">
+              <div id="profAvatarFallback" class="text-3xl font-black text-amber-400 font-heading">VN</div>
+            </div>
+            <div class="space-y-2 text-center sm:text-left">
+              <label class="block text-xs font-bold uppercase text-slate-300">Member Avatar / Profile Photo</label>
+              <input type="file" id="profAvatarInput" accept="image/*" onchange="handleProfilePhotoChange(event)" class="text-xs text-slate-400 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-slate-800 file:text-amber-300 hover:file:bg-slate-700">
+              <p class="text-[11px] text-slate-500">Will be displayed on your header avatar and profile badge.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Surname</label>
+              <input type="text" id="profSurname" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Last Name</label>
+              <input type="text" id="profLastName" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Registered Gmail</label>
+              <input type="email" id="profEmail" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Phone Contact</label>
+              <input type="tel" id="profPhone" required pattern="[0-9]{10}" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono">
+            </div>
+          </div>
+
+          <div class="pt-2 flex justify-end gap-3">
+            <button type="submit" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-110 text-slate-950 font-black rounded-xl text-xs sm:text-sm font-display shadow-lg">
+              Save Profile Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 7: MEMBERSHIP APPLICATION & ID CARD ================= -->
+    <section id="tabMembership" class="app-tab hidden max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      
+      <div class="flex items-center justify-between mb-8 border-b border-slate-800 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-400 font-id">Official Accreditation (6-Year Tenure)</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-white font-heading">Youth Association Membership</h2>
+          <p class="text-slate-400 text-xs sm:text-sm">V.NAYAK YOUTH ASSOCIATION • Madharam Village</p>
+        </div>
+      </div>
+
+      <!-- Application Form View -->
+      <div id="membershipFormSection" class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+        <form id="membershipApplicationForm" onsubmit="handleMembershipInitiatePreview(event)" class="space-y-6">
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            <!-- Surname -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Surname *</label>
+              <input type="text" id="mAppSurname" required placeholder="e.g. Vangala" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+
+            <!-- Last Name -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Last Name *</label>
+              <input type="text" id="mAppLastName" required placeholder="e.g. Nayak" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+
+            <!-- Caste / Category -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Caste / Category *</label>
+              <input type="text" id="mAppCaste" required placeholder="e.g. ST (Lambada) / BC / General" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+
+            <!-- 12-digit Aadhaar Number Input (formatted 4-4-4) -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Aadhaar No (12 Digits) *</label>
+              <div class="relative">
+                <input type="text" id="mAppAadhaar" maxlength="14" required placeholder="XXXX XXXX XXXX" oninput="formatAadhaarInput(this)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 font-mono">
+                <span class="absolute right-3 top-3 text-xs text-slate-500 font-mono" id="aadhaarLenIndicator">0/12</span>
+              </div>
+            </div>
+
+            <!-- Phone Number -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Phone Number (10 Digits) *</label>
+              <input type="tel" id="mAppPhone" required pattern="[0-9]{10}" placeholder="Phone number" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 font-mono">
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Registered Gmail *</label>
+              <input type="email" id="mAppEmail" required placeholder="username@gmail.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 font-mono">
+            </div>
+
+            <!-- Membership Tenure (At least 6 years) -->
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Membership Tenure (Minimum 6-Year Term) *</label>
+              <select id="mAppTenure" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500">
+                <option value="2026 - 2032 (6 Years Official Term)" selected>2026 - 2032 (Standard 6-Year Youth Association Tenure)</option>
+                <option value="2026 - 2033 (7 Years Permanent Term)">2026 - 2033 (7-Year Senior Youth Tenure)</option>
+                <option value="2026 - 2036 (10 Years Lifetime Founding Member)">2026 - 2036 (10-Year Founder Tenure)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Photo Upload (STRICT 10 KB to 2 MB) -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+              Member Passport Photo (Strict Limit: 10 KB to 2 MB | JPG, PNG, WEBP) *
+            </label>
+            <div class="p-5 bg-slate-950 border-2 border-dashed border-slate-800 rounded-2xl flex flex-col sm:flex-row items-center gap-5">
+              <div class="w-24 h-28 bg-slate-900 rounded-xl border border-slate-800 overflow-hidden flex items-center justify-center shrink-0 shadow-inner" id="appPhotoPreviewBox">
+                <i class="fa-solid fa-user text-3xl text-slate-600"></i>
+              </div>
+              <div class="flex-grow space-y-2 text-center sm:text-left">
+                <input type="file" id="mAppPhotoInput" accept="image/jpeg,image/jpg,image/png,image/webp" onchange="validateAndPreviewAppPhoto(event)" class="hidden">
+                <div class="flex flex-wrap gap-2 justify-center sm:justify-start">
+                  <button type="button" onclick="document.getElementById('mAppPhotoInput').click()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white rounded-xl border border-slate-700 transition">
+                    <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Select Photo File
+                  </button>
+                  <button type="button" onclick="loadSampleTestPhoto()" class="px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-xs font-semibold text-amber-300 rounded-xl border border-amber-500/30 transition">
+                    Load Quick Sample (~32 KB)
+                  </button>
+                </div>
+                <p class="text-xs text-slate-400">Accepted formats: .jpg, .jpeg, .png, .webp. Strict file size allowed: <strong>10 KB to 2 MB (2048 KB)</strong>.</p>
+                <div id="appPhotoFeedback" class="text-xs font-medium"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Residential Address in Madharam Village *</label>
+            <textarea id="mAppAddress" rows="2" required placeholder="H.No, Street, ST-Colony, Madharam Village, Singareni Mandal, Khammam District" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500"></textarea>
+          </div>
+
+          <!-- Submit for Preview -->
+          <div class="pt-2">
+            <button type="submit" class="w-full py-4 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 font-black rounded-xl text-sm font-display tracking-wider uppercase shadow-xl shadow-orange-500/25 transition">
+              <i class="fa-solid fa-eye mr-2"></i> Preview Membership Card
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div id="membershipCardResultSection" class="hidden space-y-6">
+        
+        <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-4 text-emerald-300 text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+            <span>Membership Card Generated! Preview both Front and Back sides below.</span>
+          </div>
+          <button onclick="reOpenMembershipForm()" class="text-xs font-bold text-amber-400 hover:underline flex items-center gap-1">
+            <i class="fa-solid fa-pen-to-square"></i> Edit Details
+          </button>
+        </div>
+
+        <!-- Card Toolbar -->
+        <div class="flex flex-wrap items-center justify-between gap-3 no-print bg-slate-900/90 p-4 rounded-2xl border border-slate-800 shadow-xl">
+          <div class="flex items-center gap-2">
+            <button onclick="toggleCardOrientation()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-bold text-xs rounded-xl transition flex items-center gap-2">
+              <i class="fa-solid fa-arrows-rotate"></i> Flip View (Front / Back)
+            </button>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="downloadCardSide('idCardFront', 'Front')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5">
+              <i class="fa-solid fa-download"></i> Download Front
+            </button>
+            <button onclick="downloadCardSide('idCardBack', 'Back')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5">
+              <i class="fa-solid fa-download"></i> Download Back
+            </button>
+            <button onclick="printCardDocument()" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-110 text-slate-950 font-black text-xs rounded-xl shadow transition flex items-center gap-1.5">
+              <i class="fa-solid fa-print"></i> Print ID Card
+            </button>
+          </div>
+        </div>
+
+        <!-- PRINT CONTAINER & DISPLAY AREA -->
+        <div id="printAreaContainer" class="flex flex-col lg:flex-row items-center justify-center gap-8 py-4">
+          
+          <!-- ========== CARD FRONT ========== -->
+          <div id="idCardFront" class="id-card-spec rounded-2xl bg-gradient-to-b from-white via-slate-50 to-amber-50/70 text-slate-900 border-2 border-amber-600 p-4 flex flex-col justify-between relative overflow-hidden shrink-0 select-none">
+            <!-- Top Band -->
+            <div class="absolute top-0 left-0 right-0 h-2.5 bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-400"></div>
+
+            <!-- Watermark -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.05]">
+              <i class="fa-solid fa-shield-halved text-[220px] text-black"></i>
+            </div>
+
+            <!-- Card Header with Circular Logo (Reserved solely on card) -->
+            <div class="flex items-center gap-2.5 border-b-2 border-amber-600 pb-2 relative z-10 pt-1">
+              <div class="w-12 h-12 rounded-full border border-amber-500 bg-white p-0.5 shrink-0 shadow-sm">
+                <!-- Circular Logo Emblem -->
+                <svg viewBox="0 0 200 200" class="w-full h-full">
+                  <defs>
+                    <linearGradient id="cardGradFront" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#ea580c"/>
+                      <stop offset="50%" stop-color="#eab308"/>
+                      <stop offset="100%" stop-color="#0d9488"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="100" cy="100" r="95" fill="#ffffff" stroke="#991b1b" stroke-width="3" stroke-dasharray="5,2"/>
+                  <circle cx="100" cy="100" r="82" fill="none" stroke="#ea580c" stroke-width="2"/>
+                  <path id="txtArcTop" d="M 28 100 A 72 72 0 0 1 172 100" fill="none"/>
+                  <text font-family="'Cinzel', serif" font-weight="900" font-size="15" fill="#1e1b4b">
+                    <textPath href="#txtArcTop" startOffset="50%" text-anchor="middle">V NAYAK YOUTH</textPath>
+                  </text>
+                  <path id="txtArcBtm" d="M 172 105 A 72 72 0 0 1 28 105" fill="none"/>
+                  <text font-family="'Cinzel', serif" font-weight="900" font-size="14" fill="#1e1b4b">
+                    <textPath href="#txtArcBtm" startOffset="50%" text-anchor="middle">ASSOCIATION</textPath>
+                  </text>
+                  <polygon points="34,92 36,98 42,98 37,102 39,108 34,104 29,108 31,102 26,98 32,98" fill="#d97706"/>
+                  <polygon points="166,92 168,98 174,98 169,102 171,108 166,104 161,108 163,102 158,98 164,98" fill="#d97706"/>
+                  <path d="M100 38 L104 54 L112 52 L105 68 L103 76 L97 76 L95 68 L88 52 L96 54 Z" fill="url(#cardGradFront)"/>
+                  <path d="M85 84 C72 76 60 90 68 102 C74 114 88 116 100 118 C114 120 126 130 124 144 C120 156 102 158 90 150 C78 142 72 132 70 124 L62 126 C66 142 78 158 96 162 C116 166 136 154 136 134 C136 118 120 110 104 106 C92 102 80 100 78 92 C76 86 82 80 90 82 Z" fill="url(#cardGradFront)"/>
+                  <circle cx="114" cy="94" r="3" fill="#ea580c"/>
+                </svg>
+              </div>
+
+              <div>
+                <span class="text-[9px] font-black uppercase tracking-wider text-amber-700 block font-id leading-none">Official Youth Membership Card</span>
+                <h3 class="text-sm font-black text-slate-900 leading-tight font-heading mt-0.5">V.NAYAK YOUTH ASSOCIATION</h3>
+                <span class="text-[8px] text-slate-600 block leading-tight">Singareni Mandal, Khammam Dist. (TS) 507122</span>
+              </div>
+            </div>
+
+            <!-- Member Details & Photo -->
+            <div class="flex flex-col items-center my-auto py-1 relative z-10">
+              <div class="w-24 h-28 rounded-xl border-2 border-amber-600 p-0.5 shadow-md bg-white mb-2 overflow-hidden">
+                <img id="cardDisplayPhoto" src="" class="w-full h-full object-cover rounded-lg">
+              </div>
+
+              <div class="text-center mb-1.5">
+                <h4 class="text-sm font-black uppercase text-slate-900 tracking-wide font-heading" id="cardDisplayName">MEMBER NAME</h4>
+                <div class="inline-block bg-amber-100 text-amber-950 border border-amber-400 text-[10px] font-bold px-2.5 py-0.5 rounded font-mono mt-0.5" id="cardDisplayId">
+                  ID: VNYA-2026-0000
+                </div>
+              </div>
+
+              <!-- Information Grid -->
+              <div class="w-full bg-amber-50/90 rounded-xl p-2.5 border border-amber-200 text-[10px] space-y-1 font-sans shadow-sm">
+                <div class="flex justify-between border-b border-amber-200/60 pb-0.5">
+                  <span class="text-slate-500 font-semibold">Caste:</span>
+                  <span class="font-bold text-slate-800" id="cardDisplayCaste">-</span>
+                </div>
+                <div class="flex justify-between border-b border-amber-200/60 pb-0.5">
+                  <span class="text-slate-500 font-semibold">Aadhaar:</span>
+                  <span class="font-bold font-mono text-slate-900" id="cardDisplayAadhaar">XXXX XXXX 0000</span>
+                </div>
+                <div class="flex justify-between border-b border-amber-200/60 pb-0.5">
+                  <span class="text-slate-500 font-semibold">Contact:</span>
+                  <span class="font-bold font-mono text-slate-800" id="cardDisplayPhone">-</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-500 font-semibold">Validity:</span>
+                  <span class="font-bold text-emerald-700 font-mono" id="cardDisplayTenure">2026 - 2032 (6 Yrs)</span>
+                </div>
+              </div>
+
+              <!-- Barcode Visual matching Member ID -->
+              <div class="w-full flex flex-col items-center justify-center mt-2">
+                <svg id="idBarcodeSvg" class="w-48 h-9"></svg>
+              </div>
+            </div>
+
+            <!-- Card Bottom Signatures & Seal -->
+            <div class="pt-2 border-t border-amber-600/40 flex items-end justify-between relative z-10">
+              <div class="text-center">
+                <!-- Stylized cursive signature: v Nayak youth -->
+                <div class="font-signature text-2xl text-indigo-950 font-bold leading-none select-none tracking-wide">
+                  v Nayak youth
+                </div>
+                <div class="text-[7px] uppercase tracking-wider text-slate-600 font-bold border-t border-slate-300 mt-0.5 pt-0.5">Authorized Signatory</div>
+              </div>
+
+              <div class="text-center">
+                <div class="w-8 h-8 rounded-full border border-amber-600 bg-amber-50 flex items-center justify-center mx-auto text-amber-700 text-xs shadow-inner">
+                  <i class="fa-solid fa-stamp"></i>
+                </div>
+                <div class="text-[7px] font-black text-amber-800 uppercase tracking-tighter mt-0.5">OFFICIAL SEAL</div>
+              </div>
+
+              <div class="text-right">
+                <div class="font-id font-bold text-xs text-slate-800">MADHARAM</div>
+                <div class="text-[7px] uppercase tracking-wider text-slate-500">Youth Committee</div>
+              </div>
+            </div>
+
+            <!-- Bottom Gold Line -->
+            <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-400"></div>
+          </div>
+
+          <!-- ========== CARD BACK ========== -->
+          <div id="idCardBack" class="id-card-spec rounded-2xl bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 text-slate-100 border-2 border-amber-500 shadow-2xl p-4 flex flex-col justify-between relative overflow-hidden shrink-0 select-none">
+            <!-- Top Band -->
+            <div class="absolute top-0 left-0 right-0 h-2.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600"></div>
+
+            <!-- Back Header with Association info -->
+            <div class="text-center border-b border-slate-800 pb-2 pt-1 flex items-center justify-center gap-2">
+              <div class="w-7 h-7 rounded-full bg-white p-0.5 border border-amber-500 shrink-0">
+                <svg viewBox="0 0 200 200" class="w-full h-full">
+                  <circle cx="100" cy="100" r="90" fill="#fff" stroke="#ea580c" stroke-width="4"/>
+                  <path d="M100 40 L104 54 L112 52 L105 68 L103 76 L97 76 L95 68 L88 52 L96 54 Z" fill="#ea580c"/>
+                </svg>
+              </div>
+              <div>
+                <div class="text-[8px] uppercase font-bold tracking-widest text-amber-400 font-id">Telangana Rural Youth Organization</div>
+                <h4 class="text-xs font-black text-white font-heading">V.NAYAK YOUTH ASSOCIATION</h4>
+              </div>
+            </div>
+
+            <!-- Card Back Content -->
+            <div class="space-y-2.5 text-[10px] text-slate-300 leading-relaxed my-auto">
+              
+              <!-- Back Address Specified By User -->
+              <div class="p-2.5 bg-slate-950/90 rounded-xl border border-amber-500/30 shadow-inner">
+                <div class="font-bold text-amber-400 uppercase text-[9px] mb-0.5 flex items-center gap-1 font-id tracking-wider">
+                  <i class="fa-solid fa-location-dot"></i> Official Association Address:
+                </div>
+                <p class="text-slate-100 font-bold leading-tight text-[10.5px]">
+                  st-colony ,madharam village ,singareni MLD,khammam district Telangana 507122
+                </p>
+              </div>
+
+              <!-- Member Residence Address -->
+              <div class="p-2 bg-slate-950/60 rounded-xl border border-slate-800">
+                <div class="font-bold text-slate-400 uppercase text-[8px] mb-0.5">Member Residence:</div>
+                <div id="cardDisplayBackAddress" class="text-slate-200 italic font-sans text-[9.5px]">ST-Colony, Madharam Village</div>
+              </div>
+
+              <!-- Rules & Declaration -->
+              <div class="p-2 bg-slate-950/60 rounded-xl border border-slate-800">
+                <div class="font-bold text-amber-400 uppercase text-[8px] mb-0.5">Rules & Youth Discipline:</div>
+                <ul class="list-disc pl-3.5 space-y-0.5 text-slate-400 text-[8px]">
+                  <li>Strictly for village youth sports and social initiatives.</li>
+                  <li>Card is non-transferable and remains property of the association.</li>
+                  <li>Mandatory participation in community welfare programs.</li>
+                </ul>
+              </div>
+
+              <!-- Official Helplines & Mail -->
+              <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/25 space-y-1 text-[9px]">
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-400"><i class="fa-solid fa-phone text-amber-400 mr-1"></i> Helpline 1:</span>
+                  <span class="font-bold text-amber-300 font-mono text-[10px]">9347624977</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-400"><i class="fa-solid fa-phone text-amber-400 mr-1"></i> Helpline 2:</span>
+                  <span class="font-bold text-amber-300 font-mono text-[10px]">9100894417</span>
+                </div>
+                <div class="flex items-center justify-between border-t border-amber-500/20 pt-1">
+                  <span class="text-slate-400"><i class="fa-solid fa-envelope text-amber-400 mr-1"></i> Email:</span>
+                  <span class="font-mono text-[8.5px] text-slate-200">mrwhitedevil2003@gmail.com</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Back Barcode -->
+            <div class="text-center pt-2 border-t border-slate-800 flex flex-col items-center">
+              <svg id="idBarcodeBackSvg" class="w-40 h-8 opacity-80"></svg>
+              <div class="text-[7px] text-slate-500 uppercase tracking-wider mt-0.5">
+                Singareni MLD • Khammam Dist • Telangana 507122
+              </div>
+            </div>
+
+            <!-- Bottom Accent -->
+            <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600"></div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= SECTION 8: DEDICATED ADMIN PANEL ================= -->
+    <section id="tabAdminPanel" class="app-tab hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 border-b border-slate-800 pb-5">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-red-400 font-id"><i class="fa-solid fa-crown mr-1"></i> Master Secretariat Controls</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-white font-heading">Association Admin Dashboard</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Manage upcoming portal features, links, complaints, and sponsors.</p>
+        </div>
+
+        <button onclick="handleAdminLogout()" class="px-4 py-2 text-xs font-bold bg-rose-500/20 text-rose-300 hover:bg-rose-500 hover:text-white rounded-xl transition">
+          <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Exit Admin
+        </button>
+      </div>
+
+      <!-- Add Upcoming Feature & Link Module -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl mb-10">
+        <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+          <i class="fa-solid fa-plus-circle text-amber-400"></i> Publish New Upcoming Feature / Announcement / Link
+        </h3>
+        <p class="text-xs text-slate-400 mb-4">Add exciting new features or official URLs that will instantly appear on the public homepage for all youth members.</p>
+
+        <form id="adminFeatureForm" onsubmit="handleAdminAddFeature(event)" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Feature Title *</label>
+              <input type="text" id="afTitle" required placeholder="e.g. Cricket Tournament 2026 Schedule" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">External Link / URL (Optional)</label>
+              <input type="url" id="afLink" placeholder="https://..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Badge Tag</label>
+              <input type="text" id="afBadge" placeholder="e.g. NEW / SPORTS / URGENT" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 uppercase font-mono">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Feature Description *</label>
+            <textarea id="afDescription" rows="2" required placeholder="Describe what is coming or the instructions for members..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500"></textarea>
+          </div>
+
+          <button type="submit" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-110 text-slate-950 font-black rounded-xl text-xs sm:text-sm font-display shadow-lg">
+            <i class="fa-solid fa-bullhorn mr-1.5"></i> Publish Feature to Website
+          </button>
+        </form>
+      </div>
+
+      <!-- Admin Overview Sections: Complaints Review & Sponsor Records -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Complaints Queue -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-inbox text-rose-400"></i> Youth Grievances Review
+            </h3>
+            <span class="text-xs bg-rose-500/20 text-rose-300 px-2.5 py-0.5 rounded-full font-mono" id="adminComplaintCounter">0 Total</span>
+          </div>
+
+          <div id="adminComplaintList" class="space-y-3 max-h-96 overflow-y-auto pr-1">
+            <!-- Dynamic list -->
+          </div>
+        </div>
+
+        <!-- Sponsors Management -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-hand-holding-dollar text-emerald-400"></i> Financial Sponsors Log
+            </h3>
+            <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full font-mono" id="adminSponsorCounter">0 Total</span>
+          </div>
+
+          <div id="adminSponsorList" class="space-y-3 max-h-96 overflow-y-auto pr-1">
+            <!-- Dynamic list -->
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================= MODAL: USER LOGIN ================= -->
+  <div id="modalUserLogin" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-amber-500/30 w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+      <button onclick="closeDialog('modalUserLogin')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-1 rounded-lg">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-2 text-2xl border border-amber-500/30">
+          <i class="fa-solid fa-right-to-bracket"></i>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-black text-white font-heading">Youth Portal Login</h2>
+        <p class="text-xs text-amber-400 mt-0.5 font-id tracking-wider">V.NAYAK YOUTH ASSOCIATION</p>
+      </div>
+
+      <form id="userLoginForm" onsubmit="handleUserLoginSubmit(event)" class="space-y-4">
+        <!-- User ID -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">User ID *</label>
+          <div class="relative">
+            <i class="fa-solid fa-user absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
+            <input type="text" id="logUserId" required placeholder="Enter your User ID" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono">
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Password *</label>
+          <div class="relative">
+            <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
+            <input type="password" id="logPassword" required placeholder="Enter password" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-10 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+            <button type="button" onclick="toggleFieldPassword('logPassword', this)" class="absolute right-3 top-2.5 text-slate-500 hover:text-slate-300">
+              <i class="fa-solid fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Mixed-Case Captcha -->
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300">Dynamic Captcha (Case Sensitive) *</label>
+            <span class="text-[10px] text-amber-400">Letters (a-z, A-Z)</span>
+          </div>
+          <div class="flex items-center gap-2 mb-2">
+            <div id="captchaBoxDisplay" class="captcha-badge flex-grow h-11 rounded-xl flex items-center justify-center font-mono font-black text-xl text-amber-300 border border-amber-500/40 shadow-inner">
+              ----
+            </div>
+            <button type="button" onclick="regenerateMixedCaptcha()" class="h-11 px-3.5 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-xl border border-slate-700 transition" title="Refresh Captcha">
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+          </div>
+          <input type="text" id="logCaptchaInput" required placeholder="Type the exact characters" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono">
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 font-black rounded-xl text-sm shadow-lg shadow-orange-500/25 transition font-display">
+          Sign In to Youth Portal <i class="fa-solid fa-arrow-right ml-1"></i>
+        </button>
+      </form>
+
+      <!-- New Registration Trigger -->
+      <div class="mt-6 pt-5 border-t border-slate-800 text-center">
+        <p class="text-xs text-slate-400 mb-2">New youth member in Madharam village?</p>
+        <button onclick="switchFromLoginToReg()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-semibold text-xs rounded-xl transition">
+          <i class="fa-solid fa-user-plus mr-1.5"></i> New Registration
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: USER REGISTRATION ================= -->
+  <div id="modalUserReg" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 hidden overflow-y-auto">
+    <div class="bg-slate-900 border border-amber-500/30 w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl relative my-8">
+      <button onclick="closeDialog('modalUserReg')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-1 rounded-lg">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-2 text-xl border border-amber-500/30">
+          <i class="fa-solid fa-user-plus"></i>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-black text-white font-heading">New Youth Registration</h2>
+        <p class="text-xs text-slate-400 mt-0.5">V.NAYAK YOUTH ASSOCIATION • Create permanent account</p>
+      </div>
+
+      <form id="userRegForm" onsubmit="handleUserRegSubmit(event)" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Surname *</label>
+            <input type="text" id="regSur" required placeholder="e.g. Vangala" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Last Name *</label>
+            <input type="text" id="regLast" required placeholder="e.g. Nayak" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">New User ID (Permanent) *</label>
+          <div class="relative">
+            <span class="absolute left-3.5 top-2.5 text-amber-400 text-xs font-mono">@</span>
+            <input type="text" id="regUId" required placeholder="e.g. vnayak_member" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-8 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono">
+          </div>
+          <p class="text-[10px] text-slate-400 mt-1">Once created, you can log in directly anytime without registering again.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Password *</label>
+            <input type="password" id="regPass" required placeholder="Symbols & numbers" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+            <p class="text-[9px] text-slate-400 mt-1">Min 6 chars + numbers & symbols (e.g. Pass@123)</p>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Confirm Password *</label>
+            <input type="password" id="regConfPass" required placeholder="Repeat password" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Registered Gmail Address *</label>
+          <input type="email" id="regMail" required placeholder="yourgmail@gmail.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono">
+          <p class="text-[10px] text-amber-300/80 mt-1"><i class="fa-solid fa-envelope mr-1"></i> A verification dispatch confirmation will be triggered to this Gmail.</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Phone Number (10 Digits) *</label>
+          <input type="tel" id="regPh" required pattern="[0-9]{10}" placeholder="9876543210" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono">
+        </div>
+
+        <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 font-black rounded-xl text-sm shadow-lg shadow-orange-500/25 transition mt-2 font-display">
+          <i class="fa-solid fa-paper-plane mr-1.5"></i> Submit Registration
+        </button>
+      </form>
+
+      <div class="mt-4 text-center">
+        <button onclick="switchFromRegToLogin()" class="text-xs text-slate-400 hover:text-amber-400 transition">
+          Already registered? <span class="text-amber-400 font-semibold underline">Login here</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ADMIN LOGIN ================= -->
+  <div id="modalAdminLogin" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border-2 border-red-500/40 w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+      <button onclick="closeDialog('modalAdminLogin')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-1 rounded-lg">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 bg-red-500/20 text-red-400 rounded-2xl flex items-center justify-center mx-auto mb-2 text-2xl border border-red-500/40 shadow-inner">
+          <i class="fa-solid fa-user-shield"></i>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-black text-white font-heading">Secretariat Admin Login</h2>
+        <p class="text-xs text-red-400 font-id tracking-wider mt-0.5">V.NAYAK YOUTH ASSOCIATION</p>
+      </div>
+
+      <div class="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-xs text-red-200 mb-4 text-center">
+        <strong>Authorized Access Only</strong><br/>
+        User: <span class="font-mono text-white font-bold">Admin@2026</span> | Pass: <span class="font-mono text-white font-bold">Admin@2026</span>
+      </div>
+
+      <form id="adminLoginForm" onsubmit="handleAdminLoginSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Admin ID *</label>
+          <input type="text" id="admUserId" required placeholder="Admin@2026" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-red-500 font-mono">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Admin Password *</label>
+          <div class="relative">
+            <input type="password" id="admPassword" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-red-500">
+            <button type="button" onclick="toggleFieldPassword('admPassword', this)" class="absolute right-3 top-2.5 text-slate-500 hover:text-slate-300">
+              <i class="fa-solid fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-red-600 to-rose-700 hover:brightness-110 text-white font-black rounded-xl text-sm shadow-lg shadow-red-600/30 transition font-display uppercase tracking-wider">
+          <i class="fa-solid fa-shield-halved mr-1.5"></i> Authenticate Secretariat Admin
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: PREVIEW CONFIRMATION (SUBMIT OR EDIT) ================= -->
+  <div id="modalConfirmMembership" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-amber-500/40 w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl text-center space-y-5">
+      <div class="w-16 h-16 rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center mx-auto text-3xl border border-amber-500/30">
+        <i class="fa-solid fa-id-card"></i>
+      </div>
+
+      <div>
+        <h3 class="text-xl sm:text-2xl font-black text-white font-heading">Verify Membership Details</h3>
+        <p class="text-xs sm:text-sm text-slate-300 mt-1">
+          Would you like to <strong>Submit</strong> and permanently issue your Membership ID Card, or <strong>Edit</strong> the entered information?
+        </p>
+      </div>
+
+      <div id="confirmSummaryBox" class="p-4 bg-slate-950 rounded-2xl border border-slate-800 text-left text-xs space-y-1 font-sans text-slate-300">
+        <!-- Filled dynamically -->
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 pt-2">
+        <button onclick="proceedCardEdit()" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl text-xs font-bold border border-amber-500/30 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-pen-to-square"></i> Edit Details
+        </button>
+        <button onclick="proceedCardFinalSubmit()" class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-110 text-slate-950 font-black rounded-xl text-xs font-display uppercase tracking-wider shadow-lg shadow-orange-500/20 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-circle-check"></i> Submit & Generate Card
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ADD GALLERY IMAGE ================= -->
+  <div id="modalAddImage" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-amber-500/30 w-full max-w-md rounded-3xl p-6 shadow-2xl relative">
+      <button onclick="closeDialog('modalAddImage')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="text-lg font-black text-white font-heading mb-3">Add Community Photo</h3>
+      
+      <form id="addImageForm" onsubmit="handleAddImageSubmit(event)" class="space-y-4 text-left">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Image Title / Caption *</label>
+          <input type="text" id="imgCaption" required placeholder="e.g. Village Youth Cricket Match" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Select Photo File *</label>
+          <input type="file" id="imgFileInput" accept="image/*" required class="w-full text-xs text-slate-400 bg-slate-950 p-2 rounded-xl border border-slate-800">
+        </div>
+        <button type="submit" class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-110 text-slate-950 font-black rounded-xl text-xs font-display">
+          Upload Image to Gallery
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ADD FESTIVAL ================= -->
+  <div id="modalAddFestival" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-amber-500/30 w-full max-w-md rounded-3xl p-6 shadow-2xl relative">
+      <button onclick="closeDialog('modalAddFestival')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="text-lg font-black text-white font-heading mb-3">Add Festival Celebration</h3>
+      
+      <form id="addFestForm" onsubmit="handleAddFestivalSubmit(event)" class="space-y-3 text-left">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Festival Name *</label>
+          <input type="text" id="festTitle" required placeholder="e.g. Sant Sevalal Maharaj Jayanti" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Festival Date / Month *</label>
+          <input type="text" id="festDate" required placeholder="e.g. 15 February 2026" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Details & Significance *</label>
+          <textarea id="festDesc" rows="3" required placeholder="Describe youth programs, prayers, and arrangements..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-amber-500"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Festival Poster / Image (Optional)</label>
+          <input type="file" id="festImg" accept="image/*" class="w-full text-xs text-slate-400 bg-slate-950 p-2 rounded-xl border border-slate-800">
+        </div>
+        <button type="submit" class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-110 text-slate-950 font-black rounded-xl text-xs font-display">
+          Save Festival Information
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="bg-slate-950 border-t border-slate-800/80 py-8 mt-12 text-center text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-left">
+        <p class="font-bold text-slate-200 font-heading text-sm">V.NAYAK YOUTH ASSOCIATION</p>
+        <p class="text-[11px] text-slate-400 mt-0.5">st-colony ,madharam village ,singareni MLD,khammam district Telangana 507122</p>
+        <p class="text-[11px] text-amber-400 font-mono mt-0.5">Helplines: 9347624977, 9100894417 | Email: mrwhitedevil2003@gmail.com</p>
+      </div>
+      <div class="flex gap-4 text-base text-slate-400">
+        <a href="tel:9347624977" class="hover:text-amber-400 transition" title="Helpline 1"><i class="fa-solid fa-phone"></i></a>
+        <a href="tel:9100894417" class="hover:text-amber-400 transition" title="Helpline 2"><i class="fa-solid fa-mobile-screen"></i></a>
+        <a href="mailto:mrwhitedevil2003@gmail.com" class="hover:text-amber-400 transition" title="Admin Email"><i class="fa-solid fa-envelope"></i></a>
+        <span class="text-slate-500 text-[11px] self-center">© 2026 Madharam Youth Committee</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Global State
+    let activeUser = null;
+    let isAdminActive = false;
+    let generatedCaptcha = "";
+    let appPhotoData = null;
+    let appPhotoSizeKB = 0;
+    let pendingCardPayload = null;
+
+    // Local Storage Keys
+    const USERS_KEY = "vnya_permanent_users_store";
+    const CURRENT_SESSION_KEY = "vnya_active_session";
+    const ADMIN_SESSION_KEY = "vnya_admin_active_session";
+    const CARDS_KEY = "vnya_membership_cards_";
+    const FEATURES_KEY = "vnya_admin_features";
+    const SPONSORS_KEY = "vnya_community_sponsors";
+    const COMPLAINTS_KEY = "vnya_community_complaints";
+    const GALLERY_KEY = "vnya_gallery_images";
+    const FESTIVALS_KEY = "vnya_festivals_data";
+
+    function seedInitialData() {
+      // Permanent users seed if empty
+      let users = JSON.parse(localStorage.getItem(USERS_KEY) || "{}");
+      if (!users["nayak"]) {
+        users["nayak"] = {
+          surname: "Vangala",
+          lastName: "Nayak",
+          userId: "nayak",
+          password: "Password@123",
+          email: "mrwhitedevil2003@gmail.com",
+          phone: "9347624977",
+          avatar: null
+        };
+        localStorage.setItem(USERS_KEY, JSON.stringify(users));
+      }
+
+      // Default upcoming features managed by admin
+      if (!localStorage.getItem(FEATURES_KEY)) {
+        const defaultFeatures = [
+          {
+            id: 1,
+            title: "Madharam Premier Youth Cricket Trophy",
+            badge: "SPORTS 2026",
+            description: "Annual cricket tournament registration open for all local teams in Singareni Mandal. Official Association ID card is mandatory.",
+            link: ""
+          },
+          {
+            id: 2,
+            title: "Sant Sevalal Maharaj Jayanti Preparations",
+            badge: "FESTIVAL",
+            description: "Grand religious celebrations and youth volunteer committees are being formed for ST-Colony grand procession.",
+            link: ""
+          },
+          {
+            id: 3,
+            title: "24/7 Khammam Blood Donors Network",
+            badge: "EMERGENCY",
+            description: "Instant emergency blood donors coordination across Khammam and Kothagudem hospital centers. Contact 9347624977.",
+            link: "tel:9347624977"
+          }
+        ];
+        localStorage.setItem(FEATURES_KEY, JSON.stringify(defaultFeatures));
+      }
+
+      // Default sponsors
+      if (!localStorage.getItem(SPONSORS_KEY)) {
+        const defaultSponsors = [
+          {
+            name: "Mood bhanu Prasad",
+            phone: "9100894417",
+            amount: 5000,
+            message: "Youth Tournament Ground Equipment",
+            screenshot: "",
+            date: "12 Feb 2026"
+          },
+          {
+            name: "Ramesh Nayak",
+            phone: "9347624977",
+            amount: 2500,
+            message: "Festival Food Annadanam",
+            screenshot: "",
+            date: "02 Feb 2026"
+          }
+        ];
+        localStorage.setItem(SPONSORS_KEY, JSON.stringify(defaultSponsors));
+      }
+
+      // Default festivals
+      if (!localStorage.getItem(FESTIVALS_KEY)) {
+        const defaultFestivals = [
+          {
+            id: 1,
+            title: "Sant Sevalal Maharaj Jayanti",
+            date: "15 February 2026",
+            desc: "The sacred birthday celebrations of spiritual leader Sant Sevalal Maharaj. Bhajans, flag hoisting, and youth community feast in ST-Colony.",
+            img: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80"
+          },
+          {
+            id: 2,
+            title: "Teej Festival of Banjara Youth",
+            date: "August 2026",
+            desc: "Traditional Banjara cultural festivity celebrating greenery, wheat grass rituals, folk dances, and cultural unity of Madharam youth.",
+            img: "https://images.unsplash.com/photo-1609137144827-0d5b6a7d5b12?w=600&auto=format&fit=crop&q=80"
+          },
+          {
+            id: 3,
+            title: "Deepavali Youth Lamp Festival",
+            date: "November 2026",
+            desc: "Illuminating ST-Colony streets, anti-pollution awareness rally, and sports competitions organized by V.NAYAK YOUTH ASSOCIATION.",
+            img: "https://images.unsplash.com/photo-1576085898323-218337e3e43c?w=600&auto=format&fit=crop&q=80"
+          }
+        ];
+        localStorage.setItem(FESTIVALS_KEY, JSON.stringify(defaultFestivals));
+      }
+
+      // Default gallery
+      if (!localStorage.getItem(GALLERY_KEY)) {
+        const defaultGallery = [
+          {
+            caption: "Youth Cricket Tournament Champion Squad",
+            img: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=600&auto=format&fit=crop&q=80"
+          },
+          {
+            caption: "Community Social Cleanliness & Greenery Drive",
+            img: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&auto=format&fit=crop&q=80"
+          },
+          {
+            caption: "Youth Welfare Gathering at Madharam Hall",
+            img: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=600&auto=format&fit=crop&q=80"
+          }
+        ];
+        localStorage.setItem(GALLERY_KEY, JSON.stringify(defaultGallery));
+      }
+    }
+
+    function navigateTab(tabKey) {
+      const tabs = ['home', 'gallery', 'festivals', 'sponsor', 'complaints', 'profile', 'membership', 'adminPanel'];
+      tabs.forEach(t => {
+        const el = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (el) el.classList.add('hidden');
+      });
+
+      if (tabKey === 'profile' || tabKey === 'membership' || tabKey === 'complaints') {
+        if (!activeUser && !isAdminActive) {
+          showToast('Authentication Required', 'Please log in to your youth account first.', 'error');
+          openLoginModal();
+          return;
+        }
+      }
+
+      if (tabKey === 'adminPanel' && !isAdminActive) {
+        showToast('Restricted Access', 'Admin credentials required.', 'error');
+        openAdminLoginModal();
+        return;
+      }
+
+      const targetEl = document.getElementById('tab' + tabKey.charAt(0).toUpperCase() + tabKey.slice(1));
+      if (targetEl) targetEl.classList.remove('hidden');
+
+      if (tabKey === 'home') renderFeaturesList();
+      if (tabKey === 'gallery') renderGalleryGrid();
+      if (tabKey === 'festivals') renderFestivalsGrid();
+      if (tabKey === 'sponsor') renderSponsorsList();
+      if (tabKey === 'complaints') renderComplaintsFeed();
+      if (tabKey === 'profile') loadUserProfile();
+      if (tabKey === 'membership') setupMembershipView();
+      if (tabKey === 'adminPanel') renderAdminDashboard();
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openLoginModal() {
+      regenerateMixedCaptcha();
+      closeDialog('modalUserReg');
+      closeDialog('modalAdminLogin');
+      document.getElementById('modalUserLogin').classList.remove('hidden');
+    }
+
+    function openRegistrationModal() {
+      closeDialog('modalUserLogin');
+      document.getElementById('modalUserReg').classList.remove('hidden');
+    }
+
+    function openAdminLoginModal() {
+      closeDialog('modalUserLogin');
+      closeDialog('modalUserReg');
+      document.getElementById('modalAdminLogin').classList.remove('hidden');
+    }
+
+    function closeDialog(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function switchFromLoginToReg() {
+      closeDialog('modalUserLogin');
+      openRegistrationModal();
+    }
+
+    function switchFromRegToLogin() {
+      closeDialog('modalUserReg');
+      openLoginModal();
+    }
+
+    function toggleFieldPassword(inputId, btn) {
+      const field = document.getElementById(inputId);
+      const icon = btn.querySelector('i');
+      if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        field.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+
+    // Mixed Upper & Lower Case Captcha (e.g., 'aKmBw')
+    function regenerateMixedCaptcha() {
+      const alphabet = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      let code = "";
+      for (let i = 0; i < 5; i++) {
+        code += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+      }
+      generatedCaptcha = code;
+      const box = document.getElementById('captchaBoxDisplay');
+      if (box) {
+        box.textContent = code;
+        box.style.transform = `rotate(${Math.floor(Math.random() * 8) - 4}deg)`;
+      }
+      const inp = document.getElementById('logCaptchaInput');
+      if (inp) inp.value = "";
+    }
+
+    // Toast Notifications
+    function showToast(title, message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `p-4 rounded-2xl shadow-2xl border pointer-events-auto transform transition-all duration-300 translate-y-2 opacity-0 flex items-start gap-3 text-sm ${
+        type === 'success' 
+          ? 'bg-slate-900/95 border-emerald-500 text-emerald-100' 
+          : type === 'error'
+          ? 'bg-slate-900/95 border-rose-500 text-rose-100'
+          : 'bg-slate-900/95 border-amber-500 text-amber-100'
+      }`;
+
+      const iconClass = type === 'success' ? 'fa-circle-check text-emerald-400' : type === 'error' ? 'fa-circle-exclamation text-rose-400' : 'fa-bell text-amber-400';
+      toast.innerHTML = `
+        <i class="fa-solid ${iconClass} text-lg mt-0.5"></i>
+        <div class="flex-grow">
+          <div class="font-bold text-xs uppercase tracking-wider font-heading">${title}</div>
+          <div class="text-xs mt-0.5 leading-relaxed">${message}</div>
+        </div>
+        <button class="text-slate-400 hover:text-white text-xs" onclick="this.parentElement.remove()"><i class="fa-solid fa-xmark"></i></button>
+      `;
+
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 400);
+      }, 6000);
+    }
+
+    function copyToClipboard(text, msg) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast('Copied!', msg, 'success'));
+      } else {
+        const dummy = document.createElement("textarea");
+        dummy.value = text;
+        document.body.appendChild(dummy);
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+        showToast('Copied!', msg, 'success');
+      }
+    }
+
+    function handleUserLoginSubmit(e) {
+      e.preventDefault();
+      const uId = document.getElementById('logUserId').value.trim().toLowerCase();
+      const pass = document.getElementById('logPassword').value;
+      const capt = document.getElementById('logCaptchaInput').value.trim();
+
+      // Case-sensitive captcha check
+      if (capt !== generatedCaptcha) {
+        showToast('Captcha Incorrect', 'Dynamic security captcha did not match. Please enter the exact mixed-case letters.', 'error');
+        regenerateMixedCaptcha();
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem(USERS_KEY) || "{}");
+      const user = users[uId];
+
+      if (!user || user.password !== pass) {
+        showToast('Authentication Failed', 'Invalid User ID or Password. Check your credentials or create a new registration.', 'error');
+        regenerateMixedCaptcha();
+        return;
+      }
+
+      activeUser = user;
+      sessionStorage.setItem(CURRENT_SESSION_KEY, JSON.stringify(user));
+      syncNavigationUi();
+      closeDialog('modalUserLogin');
+      showToast('Welcome!', `Logged in successfully as ${user.surname} ${user.lastName}`, 'success');
+      navigateTab('membership');
+    }
+
+    function handleUserRegSubmit(e) {
+      e.preventDefault();
+      const surname = document.getElementById('regSur').value.trim();
+      const lastName = document.getElementById('regLast').value.trim();
+      const userId = document.getElementById('regUId').value.trim().toLowerCase();
+      const pass = document.getElementById('regPass').value;
+      const confPass = document.getElementById('regConfPass').value;
+      const email = document.getElementById('regMail').value.trim();
+      const phone = document.getElementById('regPh').value.trim();
+
+      // Password rules: at least 6 chars with symbols and numbers
+      const hasNumber = /[0-9]/.test(pass);
+      const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pass);
+
+      if (pass.length < 6 || !hasNumber || !hasSymbol) {
+        showToast('Weak Password', 'Password must be at least 6 characters and include at least one number and one symbol (e.g. Pass@123).', 'error');
+        return;
+      }
+
+      if (pass !== confPass) {
+        showToast('Password Mismatch', 'Password and Confirm Password do not match.', 'error');
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem(USERS_KEY) || "{}");
+      if (users[userId]) {
+        showToast('User ID Exists', 'This User ID is already permanently registered. Please log in directly.', 'error');
+        return;
+      }
+
+      // Save permanently to localStorage
+      const newUser = {
+        surname,
+        lastName,
+        userId,
+        password: pass,
+        email,
+        phone,
+        avatar: null
+      };
+
+      users[userId] = newUser;
+      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+
+      // Automated email confirmation simulation toast
+      showToast(
+        'Registration Dispatched!',
+        `Official confirmation sent to your registered Gmail: "${email}" (cc: mrwhitedevil2003@gmail.com). You can now sign in with your permanent User ID "${userId}".`,
+        'success'
+      );
+
+      document.getElementById('userRegForm').reset();
+      switchFromRegToLogin();
+      document.getElementById('logUserId').value = userId;
+    }
+
+    function handleLogout() {
+      activeUser = null;
+      sessionStorage.removeItem(CURRENT_SESSION_KEY);
+      syncNavigationUi();
+      showToast('Signed Out', 'You have been safely signed out.', 'info');
+      navigateTab('home');
+    }
+
+    function handleAdminLoginSubmit(e) {
+      e.preventDefault();
+      const uId = document.getElementById('admUserId').value.trim();
+      const pass = document.getElementById('admPassword').value.trim();
+
+      if (uId === 'Admin@2026' && pass === 'Admin@2026') {
+        isAdminActive = true;
+        sessionStorage.setItem(ADMIN_SESSION_KEY, 'true');
+        syncNavigationUi();
+        closeDialog('modalAdminLogin');
+        showToast('Admin Authenticated', 'Welcome to V.NAYAK Secretariat Admin Panel.', 'success');
+        navigateTab('adminPanel');
+      } else {
+        showToast('Admin Access Denied', 'Invalid credentials! Use Admin@2026 / Admin@2026.', 'error');
+      }
+    }
+
+    function handleAdminLogout() {
+      isAdminActive = false;
+      sessionStorage.removeItem(ADMIN_SESSION_KEY);
+      syncNavigationUi();
+      showToast('Admin Exited', 'Logged out from Secretariat Admin.', 'info');
+      navigateTab('home');
+    }
+
+    function handleAdminAddFeature(e) {
+      e.preventDefault();
+      const title = document.getElementById('afTitle').value.trim();
+      const link = document.getElementById('afLink').value.trim();
+      const badge = document.getElementById('afBadge').value.trim().toUpperCase() || 'NEW';
+      const desc = document.getElementById('afDescription').value.trim();
+
+      const list = JSON.parse(localStorage.getItem(FEATURES_KEY) || "[]");
+      list.unshift({ id: Date.now(), title, link, badge, description: desc });
+      localStorage.setItem(FEATURES_KEY, JSON.stringify(list));
+
+      showToast('Feature Published!', 'New upcoming feature is now live on the public portal.', 'success');
+      document.getElementById('adminFeatureForm').reset();
+      renderAdminDashboard();
+      renderFeaturesList();
+    }
+
+    function renderFeaturesList() {
+      const container = document.getElementById('featuresListContainer');
+      const list = JSON.parse(localStorage.getItem(FEATURES_KEY) || "[]");
+
+      if (list.length === 0) {
+        container.innerHTML = `<div class="col-span-3 text-slate-500 text-xs text-center py-6">No announcements published yet.</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map(item => `
+        <div class="p-6 rounded-2xl bg-slate-900/90 border border-amber-500/20 hover:border-amber-500/40 transition shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-mono font-bold">${item.badge}</span>
+              <i class="fa-solid fa-bolt text-amber-400 text-xs"></i>
+            </div>
+            <h3 class="text-base font-bold text-white mb-2 leading-snug">${item.title}</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">${item.description}</p>
+          </div>
+          ${item.link ? `
+            <div class="pt-4 mt-3 border-t border-slate-800">
+              <a href="${item.link}" target="_blank" class="text-xs font-bold text-amber-400 hover:text-amber-300 inline-flex items-center gap-1.5">
+                Official Link / Action <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    function loadUserProfile() {
+      if (!activeUser) return;
+      document.getElementById('profUserIdDisplay').textContent = `@${activeUser.userId}`;
+      document.getElementById('profSurname').value = activeUser.surname || '';
+      document.getElementById('profLastName').value = activeUser.lastName || '';
+      document.getElementById('profEmail').value = activeUser.email || '';
+      document.getElementById('profPhone').value = activeUser.phone || '';
+
+      const prev = document.getElementById('profAvatarPreview');
+      const fall = document.getElementById('profAvatarFallback');
+      if (activeUser.avatar) {
+        prev.src = activeUser.avatar;
+        prev.classList.remove('hidden');
+        fall.classList.add('hidden');
+      } else {
+        prev.classList.add('hidden');
+        fall.classList.remove('hidden');
+        fall.textContent = `${activeUser.surname.charAt(0)}${activeUser.lastName.charAt(0)}`.toUpperCase();
+      }
+    }
+
+    function handleProfilePhotoChange(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        activeUser.avatar = evt.target.result;
+        loadUserProfile();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleProfileUpdate(e) {
+      e.preventDefault();
+      if (!activeUser) return;
+      activeUser.surname = document.getElementById('profSurname').value.trim();
+      activeUser.lastName = document.getElementById('profLastName').value.trim();
+      activeUser.email = document.getElementById('profEmail').value.trim();
+      activeUser.phone = document.getElementById('profPhone').value.trim();
+
+      const users = JSON.parse(localStorage.getItem(USERS_KEY) || "{}");
+      users[activeUser.userId] = activeUser;
+      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+      sessionStorage.setItem(CURRENT_SESSION_KEY, JSON.stringify(activeUser));
+      syncNavigationUi();
+      showToast('Profile Updated', 'Your profile details have been saved successfully.', 'success');
+    }
+
+    function formatAadhaarInput(input) {
+      let v = input.value.replace(/\D/g, '').slice(0, 12);
+      document.getElementById('aadhaarLenIndicator').textContent = `${v.length}/12`;
+      let formatted = '';
+      for (let i = 0; i < v.length; i++) {
+        if (i > 0 && i % 4 === 0) formatted += ' ';
+        formatted += v[i];
+      }
+      input.value = formatted;
+    }
+
+    function validateAndPreviewAppPhoto(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const sizeKB = file.size / 1024;
+      appPhotoSizeKB = parseFloat(sizeKB.toFixed(1));
+      const feedback = document.getElementById('appPhotoFeedback');
+
+      // STRICT VALIDATION: 10 KB to 2 MB (2048 KB)
+      if (appPhotoSizeKB < 10.0 || appPhotoSizeKB > 2048.0) {
+        appPhotoData = null;
+        feedback.className = "text-xs font-semibold text-rose-400";
+        feedback.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> Size is <strong>${appPhotoSizeKB} KB</strong>. Rejected! Strictly between <strong>10 KB and 2 MB</strong> only.`;
+        document.getElementById('appPhotoPreviewBox').innerHTML = '<i class="fa-solid fa-user-xmark text-3xl text-rose-400"></i>';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        appPhotoData = evt.target.result;
+        feedback.className = "text-xs font-semibold text-emerald-400";
+        feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> Accepted photo (${appPhotoSizeKB} KB). Ready for 6-year ID card!`;
+        document.getElementById('appPhotoPreviewBox').innerHTML = `<img src="${appPhotoData}" class="w-full h-full object-cover">`;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function loadSampleTestPhoto() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 300;
+      canvas.height = 360;
+      const ctx = canvas.getContext('2d');
+
+      const grad = ctx.createLinearGradient(0, 0, 300, 360);
+      grad.addColorStop(0, '#1e293b');
+      grad.addColorStop(1, '#0f172a');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 300, 360);
+
+      // Gold avatar portrait
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.arc(150, 130, 55, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(150, 330, 100, 0, Math.PI, true);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 15px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('MADHARAM YOUTH', 150, 220);
+
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+      const approxKB = parseFloat(((dataUrl.length * (3 / 4)) / 1024).toFixed(1));
+
+      appPhotoData = dataUrl;
+      appPhotoSizeKB = approxKB;
+
+      const feedback = document.getElementById('appPhotoFeedback');
+      feedback.className = "text-xs font-semibold text-emerald-400";
+      feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> Quick test photo generated (${appPhotoSizeKB} KB). Meets 10 KB - 2 MB standard.`;
+      document.getElementById('appPhotoPreviewBox').innerHTML = `<img src="${appPhotoData}" class="w-full h-full object-cover">`;
+    }
+
+    function setupMembershipView() {
+      if (!activeUser) return;
+      document.getElementById('mAppSurname').value = activeUser.surname || '';
+      document.getElementById('mAppLastName').value = activeUser.lastName || '';
+      document.getElementById('mAppPhone').value = activeUser.phone || '';
+      document.getElementById('mAppEmail').value = activeUser.email || '';
+
+      const saved = localStorage.getItem(CARDS_KEY + activeUser.userId);
+      if (saved) {
+        const data = JSON.parse(saved);
+        renderGeneratedIdCard(data);
+      } else {
+        document.getElementById('membershipFormSection').classList.remove('hidden');
+        document.getElementById('membershipCardResultSection').classList.add('hidden');
+      }
+    }
+
+    // Step 1: Initiate Preview & Show "Submit or Edit" Modal
+    function handleMembershipInitiatePreview(e) {
+      e.preventDefault();
+      if (!activeUser) return;
+
+      const surname = document.getElementById('mAppSurname').value.trim();
+      const lastName = document.getElementById('mAppLastName').value.trim();
+      const caste = document.getElementById('mAppCaste').value.trim();
+      const rawAadhaar = document.getElementById('mAppAadhaar').value.replace(/\D/g, '');
+      const phone = document.getElementById('mAppPhone').value.trim();
+      const email = document.getElementById('mAppEmail').value.trim();
+      const tenure = document.getElementById('mAppTenure').value;
+      const address = document.getElementById('mAppAddress').value.trim();
+
+      if (rawAadhaar.length !== 12) {
+        showToast('Invalid Aadhaar', 'Aadhaar number must contain exactly 12 digits.', 'error');
+        return;
+      }
+
+      if (!appPhotoData) {
+        showToast('Photo Required', 'Please upload a photo between 10 KB and 2 MB.', 'error');
+        return;
+      }
+
+      const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+      const membershipId = `VNYA-2026-${randomSuffix}`;
+      const maskedAadhaar = `XXXX XXXX ${rawAadhaar.slice(8)}`;
+
+      pendingCardPayload = {
+        fullName: `${surname} ${lastName}`,
+        surname,
+        lastName,
+        caste,
+        aadhaar: maskedAadhaar,
+        phone,
+        email,
+        tenure,
+        address,
+        membershipId,
+        photo: appPhotoData
+      };
+
+      // Populate summary dialog
+      document.getElementById('confirmSummaryBox').innerHTML = `
+        <div><strong>Name:</strong> ${pendingCardPayload.fullName}</div>
+        <div><strong>Caste:</strong> ${pendingCardPayload.caste} | <strong>Aadhaar:</strong> ${pendingCardPayload.aadhaar}</div>
+        <div><strong>Tenure:</strong> ${pendingCardPayload.tenure}</div>
+        <div><strong>Phone:</strong> ${pendingCardPayload.phone}</div>
+        <div><strong>Address:</strong> ${pendingCardPayload.address}</div>
+      `;
+
+      // Show confirmation prompt
+      document.getElementById('modalConfirmMembership').classList.remove('hidden');
+    }
+
+    function proceedCardEdit() {
+      document.getElementById('modalConfirmMembership').classList.add('hidden');
+      showToast('Edit Mode', 'You can now update your form inputs.', 'info');
+    }
+
+    function proceedCardFinalSubmit() {
+      document.getElementById('modalConfirmMembership').classList.add('hidden');
+      if (!pendingCardPayload || !activeUser) return;
+
+      localStorage.setItem(CARDS_KEY + activeUser.userId, JSON.stringify(pendingCardPayload));
+      showToast('Card Certified!', 'Official 6-year ID Card generated with barcode & authorized signature.', 'success');
+      renderGeneratedIdCard(pendingCardPayload);
+    }
+
+    function reOpenMembershipForm() {
+      document.getElementById('membershipFormSection').classList.remove('hidden');
+      document.getElementById('membershipCardResultSection').classList.add('hidden');
+    }
+
+    function renderGeneratedIdCard(data) {
+      document.getElementById('membershipFormSection').classList.add('hidden');
+      document.getElementById('membershipCardResultSection').classList.remove('hidden');
+
+      document.getElementById('cardDisplayPhoto').src = data.photo;
+      document.getElementById('cardDisplayName').textContent = data.fullName;
+      document.getElementById('cardDisplayId').textContent = `ID: ${data.membershipId}`;
+      document.getElementById('cardDisplayCaste').textContent = data.caste;
+      document.getElementById('cardDisplayAadhaar').textContent = data.aadhaar;
+      document.getElementById('cardDisplayPhone').textContent = data.phone;
+      document.getElementById('cardDisplayTenure').textContent = data.tenure.split('(')[0].trim();
+      document.getElementById('cardDisplayBackAddress').textContent = data.address;
+
+      // Barcode generation with JsBarcode matching data.membershipId
+      try {
+        JsBarcode("#idBarcodeSvg", data.membershipId, {
+          format: "CODE128",
+          lineColor: "#0f172a",
+          width: 1.5,
+          height: 30,
+          displayValue: true,
+          fontSize: 9,
+          font: "Rajdhani",
+          margin: 0
+        });
+
+        JsBarcode("#idBarcodeBackSvg", data.membershipId, {
+          format: "CODE128",
+          lineColor: "#f59e0b",
+          width: 1.4,
+          height: 24,
+          displayValue: true,
+          fontSize: 8,
+          font: "Rajdhani",
+          margin: 0
+        });
+      } catch (err) {
+        console.error("Barcode generator error:", err);
+      }
+    }
+
+    let isFrontCurrentlyVisible = true;
+    function toggleCardOrientation() {
+      const front = document.getElementById('idCardFront');
+      const back = document.getElementById('idCardBack');
+      if (isFrontCurrentlyVisible) {
+        front.classList.add('hidden');
+        back.classList.remove('hidden');
+        isFrontCurrentlyVisible = false;
+        showToast('Card Flipped', 'Viewing Back Side of Membership Card', 'info');
+      } else {
+        front.classList.remove('hidden');
+        back.classList.add('hidden');
+        isFrontCurrentlyVisible = true;
+        showToast('Card Flipped', 'Viewing Front Side of Membership Card', 'info');
+      }
+    }
+
+    function printCardDocument() {
+      document.getElementById('idCardFront').classList.remove('hidden');
+      document.getElementById('idCardBack').classList.remove('hidden');
+      window.print();
+    }
+
+    function downloadCardSide(elementId, sideName) {
+      const target = document.getElementById(elementId);
+      const wasHidden = target.classList.contains('hidden');
+      if (wasHidden) target.classList.remove('hidden');
+
+      showToast('Rendering PNG', `Generating crisp ${sideName} ID Card image...`, 'info');
+
+      html2canvas(target, {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: null
+      }).then(canvas => {
+        if (wasHidden) target.classList.add('hidden');
+        const link = document.createElement('a');
+        link.download = `V_NAYAK_YOUTH_ID_${sideName.toUpperCase()}_${activeUser ? activeUser.userId : 'MEMBER'}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('Downloaded!', `${sideName} card saved to your device.`, 'success');
+      }).catch(err => {
+        if (wasHidden) target.classList.add('hidden');
+        showToast('Export Error', err.message, 'error');
+      });
+    }
+
+    function previewSponsorScreenshot(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        document.getElementById('spPreviewImg').src = evt.target.result;
+        document.getElementById('spScreenshotPreview').classList.remove('hidden');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleSponsorSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('spName').value.trim();
+      const phone = document.getElementById('spPhone').value.trim();
+      const amount = parseFloat(document.getElementById('spAmount').value);
+      const message = document.getElementById('spMessage').value.trim() || 'Youth Association Fund';
+      const previewImg = document.getElementById('spPreviewImg').src;
+
+      const sponsors = JSON.parse(localStorage.getItem(SPONSORS_KEY) || "[]");
+      sponsors.unshift({
+        name,
+        phone,
+        amount,
+        message,
+        screenshot: previewImg || '',
+        date: new Date().toLocaleDateString('en-IN')
+      });
+      localStorage.setItem(SPONSORS_KEY, JSON.stringify(sponsors));
+
+      showToast('Contribution Received', `Thank you ${name}! ₹${amount} recorded for youth welfare.`, 'success');
+      document.getElementById('sponsorForm').reset();
+      document.getElementById('spScreenshotPreview').classList.add('hidden');
+      renderSponsorsList();
+    }
+
+    function renderSponsorsList() {
+      const container = document.getElementById('sponsorList');
+      const sponsors = JSON.parse(localStorage.getItem(SPONSORS_KEY) || "[]");
+
+      let total = 0;
+      sponsors.forEach(s => total += (s.amount || 0));
+      document.getElementById('sponsorTotalCounter').textContent = `Total Raised: ₹${total.toLocaleString('en-IN')}`;
+
+      if (sponsors.length === 0) {
+        container.innerHTML = `<div class="text-slate-500 text-xs text-center py-4">No sponsors listed yet.</div>`;
+        return;
+      }
+
+      container.innerHTML = sponsors.map(s => `
+        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-base shrink-0">
+              ₹
+            </div>
+            <div>
+              <div class="text-sm font-bold text-white">${s.name}</div>
+              <div class="text-[11px] text-slate-400">${s.message} • <span class="font-mono">${s.date}</span></div>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-base font-black text-emerald-400 font-mono">₹${s.amount.toLocaleString('en-IN')}</div>
+            <span class="text-[10px] text-slate-500 font-mono">Phone: ${s.phone.slice(0, 6)}XXXX</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleComplaintSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('cpName').value.trim();
+      const phone = document.getElementById('cpPhone').value.trim();
+      const subject = document.getElementById('cpSubject').value.trim();
+      const desc = document.getElementById('cpDescription').value.trim();
+      const fileInput = document.getElementById('cpImage');
+
+      function saveComplaint(imgData) {
+        const complaints = JSON.parse(localStorage.getItem(COMPLAINTS_KEY) || "[]");
+        complaints.unshift({
+          id: Date.now(),
+          name,
+          phone,
+          subject,
+          description: desc,
+          image: imgData || null,
+          date: new Date().toLocaleDateString('en-IN'),
+          status: 'Under Review'
+        });
+        localStorage.setItem(COMPLAINTS_KEY, JSON.stringify(complaints));
+
+        showToast('Complaint Lodged', 'Your grievance has been forwarded to the youth secretariat.', 'info');
+        document.getElementById('complaintForm').reset();
+        renderComplaintsFeed();
+      }
+
+      if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (evt) => saveComplaint(evt.target.result);
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        saveComplaint(null);
+      }
+    }
+
+    function renderComplaintsFeed() {
+      const container = document.getElementById('complaintFeed');
+      const list = JSON.parse(localStorage.getItem(COMPLAINTS_KEY) || "[]");
+
+      if (list.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-slate-500 text-xs bg-slate-900/40 rounded-2xl">No grievances submitted yet. All village amenities currently orderly.</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map(c => `
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-400 font-heading">${c.subject}</span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-mono">${c.status}</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">${c.description}</p>
+          ${c.image ? `<img src="${c.image}" class="w-32 h-24 object-cover rounded-xl border border-slate-700 mt-2">` : ''}
+          <div class="flex items-center justify-between text-[10px] text-slate-500 pt-2 border-t border-slate-800">
+            <span>By: <strong>${c.name}</strong></span>
+            <span>${c.date}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderFestivalsGrid() {
+      const container = document.getElementById('festivalListGrid');
+      const festivals = JSON.parse(localStorage.getItem(FESTIVALS_KEY) || "[]");
+
+      container.innerHTML = festivals.map(f => `
+        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl overflow-hidden shadow-xl flex flex-col justify-between">
+          <div>
+            ${f.img ? `<div class="h-44 w-full overflow-hidden"><img src="${f.img}" class="w-full h-full object-cover hover:scale-105 transition duration-500"></div>` : ''}
+            <div class="p-5 space-y-2">
+              <span class="text-[10px] font-mono font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded">${f.date}</span>
+              <h3 class="text-base font-bold text-white font-heading">${f.title}</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">${f.desc}</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0">
+            <button onclick="showToast('Event Registered', 'You are marked as an attendee for ${f.title}', 'success')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 text-xs font-bold rounded-xl transition">
+              Volunteer / Attend Event
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openAddFestivalModal() {
+      document.getElementById('modalAddFestival').classList.remove('hidden');
+    }
+
+    function handleAddFestivalSubmit(e) {
+      e.preventDefault();
+      const title = document.getElementById('festTitle').value.trim();
+      const date = document.getElementById('festDate').value.trim();
+      const desc = document.getElementById('festDesc').value.trim();
+      const file = document.getElementById('festImg').files[0];
+
+      function saveFest(imgData) {
+        const list = JSON.parse(localStorage.getItem(FESTIVALS_KEY) || "[]");
+        list.unshift({ id: Date.now(), title, date, desc, img: imgData || '' });
+        localStorage.setItem(FESTIVALS_KEY, JSON.stringify(list));
+        showToast('Festival Added', 'Festival details published to community view.', 'success');
+        document.getElementById('addFestForm').reset();
+        closeDialog('modalAddFestival');
+        renderFestivalsGrid();
+      }
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (evt) => saveFest(evt.target.result);
+        reader.readAsDataURL(file);
+      } else {
+        saveFest('');
+      }
+    }
+
+    function renderGalleryGrid() {
+      const container = document.getElementById('galleryGrid');
+      const gallery = JSON.parse(localStorage.getItem(GALLERY_KEY) || "[]");
+
+      container.innerHTML = gallery.map(item => `
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg group">
+          <div class="h-48 w-full overflow-hidden bg-slate-950">
+            <img src="${item.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+          </div>
+          <div class="p-3.5">
+            <p class="text-xs font-semibold text-slate-200 leading-snug">${item.caption}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openAddImageModal() {
+      document.getElementById('modalAddImage').classList.remove('hidden');
+    }
+
+    function handleAddImageSubmit(e) {
+      e.preventDefault();
+      const caption = document.getElementById('imgCaption').value.trim();
+      const file = document.getElementById('imgFileInput').files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const list = JSON.parse(localStorage.getItem(GALLERY_KEY) || "[]");
+        list.unshift({ caption, img: evt.target.result });
+        localStorage.setItem(GALLERY_KEY, JSON.stringify(list));
+        showToast('Image Uploaded', 'New photo added to the youth gallery.', 'success');
+        document.getElementById('addImageForm').reset();
+        closeDialog('modalAddImage');
+        renderGalleryGrid();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function renderAdminDashboard() {
+      const complaints = JSON.parse(localStorage.getItem(COMPLAINTS_KEY) || "[]");
+      const sponsors = JSON.parse(localStorage.getItem(SPONSORS_KEY) || "[]");
+
+      document.getElementById('adminComplaintCounter').textContent = `${complaints.length} Lodged`;
+      document.getElementById('adminSponsorCounter').textContent = `${sponsors.length} Donors`;
+
+      // Admin complaints
+      const cpList = document.getElementById('adminComplaintList');
+      if (complaints.length === 0) {
+        cpList.innerHTML = `<div class="text-slate-500 text-xs text-center py-4">No grievances pending.</div>`;
+      } else {
+        cpList.innerHTML = complaints.map(c => `
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1 text-xs">
+            <div class="flex justify-between font-bold text-white">
+              <span>${c.subject}</span>
+              <span class="text-rose-400">${c.name} (${c.phone})</span>
+            </div>
+            <p class="text-slate-400 text-[11px]">${c.description}</p>
+          </div>
+        `).join('');
+      }
+
+      // Admin sponsors
+      const spList = document.getElementById('adminSponsorList');
+      if (sponsors.length === 0) {
+        spList.innerHTML = `<div class="text-slate-500 text-xs text-center py-4">No sponsor records.</div>`;
+      } else {
+        spList.innerHTML = sponsors.map(s => `
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 flex justify-between items-center text-xs">
+            <div>
+              <div class="font-bold text-white">${s.name} (${s.phone})</div>
+              <div class="text-slate-400 text-[10px]">${s.message} • ${s.date}</div>
+            </div>
+            <div class="text-emerald-400 font-black font-mono">₹${s.amount}</div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function syncNavigationUi() {
+      const guestGroup = document.getElementById('navGuestActions');
+      const memberGroup = document.getElementById('navMemberActions');
+      const adminGroup = document.getElementById('navAdminActions');
+
+      guestGroup.classList.add('hidden');
+      memberGroup.classList.add('hidden');
+      adminGroup.classList.add('hidden');
+
+      if (isAdminActive) {
+        adminGroup.classList.remove('hidden');
+        adminGroup.classList.add('flex');
+      } else if (activeUser) {
+        memberGroup.classList.remove('hidden');
+        memberGroup.classList.add('flex');
+
+        const navAvatar = document.getElementById('navUserAvatar');
+        if (activeUser.avatar) {
+          navAvatar.innerHTML = `<img src="${activeUser.avatar}" class="w-full h-full object-cover">`;
+        } else {
+          navAvatar.textContent = (activeUser.lastName || 'U').charAt(0).toUpperCase();
+        }
+      } else {
+        guestGroup.classList.remove('hidden');
+        guestGroup.classList.add('flex');
+      }
+    }
+
+    window.onload = function() {
+      seedInitialData();
+      regenerateMixedCaptcha();
+
+      const userSession = sessionStorage.getItem(CURRENT_SESSION_KEY);
+      if (userSession) activeUser = JSON.parse(userSession);
+
+      const adminSession = sessionStorage.getItem(ADMIN_SESSION_KEY);
+      if (adminSession === 'true') isAdminActive = true;
+
+      syncNavigationUi();
+      renderFeaturesList();
+    };
+  </script>
+</body>
+</html>

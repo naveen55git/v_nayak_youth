@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>V.NAYAK YOUTH MADHARAM - Official Youth Community Portal</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome 6 CDN for iconography -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+  <!-- Google Fonts: Inter, Rajdhani, Cinzel, and cursive Dancing Script / Great Vibes for signatures -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Dancing+Script:wght@700&family=Great+Vibes&family=Inter:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- JsBarcode CDN for generating realistic scannable barcodes matching Membership ID -->
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+
+  <!-- HTML2Canvas CDN for generating downloadable ID card images for mobile and desktop -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#f97316',
+              amber: '#f59e0b',
+              gold: '#d97706',
+              teal: '#0d9488',
+              navy: '#0f172a',
+              dark: '#030712'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Cinzel', 'serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            id: ['Rajdhani', 'sans-serif'],
+            signature: ['Dancing Script', 'cursive'],
+            seal: ['Great Vibes', 'cursive']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Smooth scroll behavior */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Dynamic Captcha canvas styling */
+    .captcha-display {
+      letter-spacing: 7px;
+      user-select: none;
+      background: repeating-linear-gradient(45deg, #0b1120, #0b1120 12px, #1e293b 12px, #1e293b 24px);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(245, 158, 11, 0.5);
+    }
+
+    /* Subtle background grid */
+    .bg-grid-pattern {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+    }
+
+    /* ID Card dimensions standard CR80 format scaled for ultra-high print clarity */
+    .id-card-render {
+      width: 340px;
+      min-height: 535px;
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Custom print format: isolates cards onto clear white background */
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #printAreaContainer, #printAreaContainer * {
+        visibility: visible !important;
+      }
+      #printAreaContainer {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: auto;
+        padding: 10mm;
+        margin: 0;
+        background: #ffffff !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+        gap: 15mm !important;
+        z-index: 999999;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-slate-950 bg-grid-pattern relative">
+
+  <!-- Top Announcement / Helpline Bar -->
+  <div class="bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 text-slate-950 text-xs font-bold py-1.5 px-4 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="bg-slate-950 text-amber-300 px-2 py-0.5 rounded text-[10px] tracking-wider uppercase font-black">Official</span>
+        <span>V.NAYAK YOUTH MADHARAM • Singareni MLD, Khammam Dist. (TS)</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs font-semibold">
+        <span class="flex items-center gap-1.5">
+          <i class="fa-solid fa-phone text-slate-950"></i> Helplines: 
+          <a href="tel:9347624977" class="hover:underline font-bold text-slate-950">9347624977</a> | 
+          <a href="tel:9100894417" class="hover:underline font-bold text-slate-950">9100894417</a>
+        </span>
+        <span class="hidden md:inline-flex items-center gap-1">
+          <i class="fa-solid fa-envelope text-slate-950"></i> mrwhitedevil2003@gmail.com
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-amber-500/20 shadow-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Title (Standard web emblem/icon, official circular logo reserved strictly for ID card) -->
+      <div class="flex items-center gap-3 cursor-pointer select-none" onclick="switchView('welcome')">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-orange-500/20 shrink-0">
+          <i class="fa-solid fa-users"></i>
+        </div>
+
+        <div>
+          <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 block font-id leading-tight">YOUTH ASSOCIATION • ST-COLONY</span>
+          <h1 class="text-base sm:text-xl font-black tracking-tight text-white flex items-center gap-1 font-heading">
+            V.NAYAK YOUTH <span class="text-amber-400">MADHARAM</span>
+          </h1>
+        </div>
+      </div>
+
+      <!-- Right Action Controls -->
+      <div class="flex items-center gap-3">
+        <!-- Guest View Buttons -->
+        <div id="navGuestGroup" class="flex items-center gap-2 sm:gap-3">
+          <button onclick="switchView('welcome')" class="hidden sm:inline-flex px-3 py-2 text-xs sm:text-sm font-semibold text-slate-300 hover:text-amber-400 transition">
+            <i class="fa-solid fa-house mr-1"></i> Home
+          </button>
+          <button onclick="openRegistrationModal()" class="px-3.5 py-2 text-xs sm:text-sm font-semibold text-amber-300 border border-amber-500/40 hover:bg-amber-500/10 rounded-xl transition">
+            <i class="fa-solid fa-user-plus mr-1"></i> Register
+          </button>
+          <button onclick="openLoginModal()" class="px-4 py-2 text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 rounded-xl shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-0.5 flex items-center gap-1.5">
+            <i class="fa-solid fa-right-to-bracket"></i> Login
+          </button>
+        </div>
+
+        <!-- Authenticated View Buttons -->
+        <div id="navUserGroup" class="hidden items-center gap-3">
+          <button onclick="switchView('dashboard')" class="text-xs sm:text-sm font-semibold text-slate-200 hover:text-amber-400 transition">
+            <i class="fa-solid fa-gauge mr-1"></i> Dashboard
+          </button>
+          <button onclick="openMembershipView()" class="px-3.5 py-1.5 text-xs font-bold bg-amber-500/15 text-amber-300 border border-amber-500/40 rounded-xl hover:bg-amber-500/25 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-id-card"></i> Membership
+          </button>
+          <div class="flex items-center gap-2 pl-2 border-l border-slate-800">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 text-slate-950 font-black flex items-center justify-center text-xs shadow-inner" id="navAvatarInitial">
+              U
+            </div>
+            <button onclick="handleLogout()" title="Logout" class="px-3 py-1.5 text-xs font-semibold bg-rose-500/20 text-rose-300 hover:bg-rose-500 hover:text-white rounded-xl transition">
+              <i class="fa-solid fa-power-off"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Interactive Toast Notification Container -->
+  <div id="toastContainer" class="fixed top-24 right-4 sm:right-6 z-50 flex flex-col gap-2.5 max-w-md w-full pointer-events-none"></div>
+
+  <main class="flex-grow">
+    
+    <!-- ==================== VIEW 1: WELCOME SCREEN ==================== -->
+    <section id="viewWelcome" class="view-screen">
+      <!-- Hero Banner -->
+      <div class="relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 pt-10 pb-20 border-b border-amber-500/20">
+        <!-- Ambient lighting -->
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/2 -right-32 w-96 h-96 bg-orange-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+            
+            <div class="max-w-2xl text-center lg:text-left space-y-6">
+              <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-wider">
+                <i class="fa-solid fa-fire text-amber-400"></i> Empowering Village Youth • ST-Colony, Madharam
+              </div>
+
+              <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight font-heading">
+                V.NAYAK YOUTH <br/>
+                <span class="bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-300 bg-clip-text text-transparent">MADHARAM</span>
+              </h1>
+
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-amber-500/30 text-xs sm:text-sm text-amber-200/90 flex items-start gap-3 text-left">
+                <i class="fa-solid fa-bullhorn text-amber-400 text-lg mt-0.5 shrink-0"></i>
+                <div>
+                  <strong class="text-amber-400 uppercase tracking-wide">Official Youth Association Notice:</strong>
+                  <p class="mt-0.5 text-slate-300">This web portal is dedicated solely to Madharam rural youth welfare, sports leagues, emergency blood assistance, and social empowerment. All members can register, submit youth credentials, and generate their verified PVC Membership Card.</p>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                <button onclick="openRegistrationModal()" class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 shadow-xl shadow-orange-500/25 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 font-display">
+                  <i class="fa-solid fa-user-plus"></i> New Youth Registration
+                </button>
+                <button onclick="openLoginModal()" class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-sm bg-slate-900 hover:bg-slate-800 text-white border border-amber-500/40 hover:border-amber-400 transition flex items-center justify-center gap-2 font-display">
+                  <i class="fa-solid fa-right-to-bracket text-amber-400"></i> Youth Login
+                </button>
+              </div>
+
+              <!-- Address & Helpline pill -->
+              <div class="pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 text-xs text-slate-400">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-location-dot text-amber-400"></i>
+                  <span>ST-Colony, Madharam Village, Singareni MLD - 507122</span>
+                </div>
+                <div class="flex items-center gap-2 text-amber-300">
+                  <i class="fa-solid fa-phone"></i>
+                  <span>9347624977 / 9100894417</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Youth Hero Visual Badge (Official circular logo reserved exclusively for the membership card) -->
+            <div class="w-full max-w-sm flex justify-center">
+              <div class="relative group">
+                <div class="absolute -inset-2 bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 rounded-3xl blur-2xl opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+                <div class="relative rounded-3xl bg-slate-900 border border-amber-500/30 p-6 sm:p-8 text-center space-y-4 shadow-2xl">
+                  <div class="w-20 h-20 mx-auto rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-4xl border border-amber-500/30">
+                    <i class="fa-solid fa-hands-holding-circle"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-white font-heading">Youth Unity & Strength</h3>
+                  <p class="text-xs text-slate-400 leading-relaxed">
+                    Exclusive digital portal for Madharam village youth. Apply for your authentic PVC membership card with scannable barcode and authorized signature.
+                  </p>
+                  <div class="pt-2">
+                    <button onclick="openRegistrationModal()" class="w-full py-2.5 px-4 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-bold hover:bg-amber-500 hover:text-slate-950 transition">
+                      Join The Youth Movement <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Feature Statistics -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-5xl mx-auto">
+            <div class="bg-slate-900/80 backdrop-blur border border-amber-500/20 rounded-2xl p-5 text-center shadow-lg">
+              <div class="text-2xl sm:text-3xl font-black text-amber-400 font-id">100%</div>
+              <div class="text-xs text-slate-400 uppercase font-semibold mt-1">Village Youth Only</div>
+            </div>
+            <div class="bg-slate-900/80 backdrop-blur border border-amber-500/20 rounded-2xl p-5 text-center shadow-lg">
+              <div class="text-2xl sm:text-3xl font-black text-amber-400 font-id">ST-COLONY</div>
+              <div class="text-xs text-slate-400 uppercase font-semibold mt-1">Madharam Base</div>
+            </div>
+            <div class="bg-slate-900/80 backdrop-blur border border-amber-500/20 rounded-2xl p-5 text-center shadow-lg">
+              <div class="text-2xl sm:text-3xl font-black text-amber-400 font-id">SINGARENI MLD</div>
+              <div class="text-xs text-slate-400 uppercase font-semibold mt-1">Mandal Division</div>
+            </div>
+            <div class="bg-slate-900/80 backdrop-blur border border-amber-500/20 rounded-2xl p-5 text-center shadow-lg">
+              <div class="text-2xl sm:text-3xl font-black text-amber-400 font-id">24/7 HELPLINE</div>
+              <div class="text-xs text-slate-400 uppercase font-semibold mt-1">9347624977</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Youth Association Pillars Section -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="text-xs uppercase font-extrabold tracking-widest text-amber-400 font-id">Our Youth Association Mandate</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight mt-1 font-heading">Rural Youth Welfare & Brotherhood</h2>
+          <p class="text-slate-400 text-sm mt-2">Serving Madharam village through organized sports tournaments, social welfare, emergency blood support, and civic unity.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-slate-900/70 border border-slate-800 p-6 rounded-2xl hover:border-amber-500/40 transition group">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+              <i class="fa-solid fa-trophy"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Sports & Youth Athletics</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Organizing cricket tournaments, volleyball championships, and sports fitness for all young members in Singareni mandal.
+            </p>
+          </div>
+
+          <div class="bg-slate-900/70 border border-slate-800 p-6 rounded-2xl hover:border-amber-500/40 transition group">
+            <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+              <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Blood Helpline & Social Care</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Instant blood donors coordination across Khammam hospitals, village health camps, and direct family assistance.
+            </p>
+          </div>
+
+          <div class="bg-slate-900/70 border border-slate-800 p-6 rounded-2xl hover:border-amber-500/40 transition group">
+            <div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+              <i class="fa-solid fa-id-card-clip"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Official Membership Cards</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Equipped with scannable barcode matching your ID, authorized "V Nayak Youth" signature, and 2-sided printable PVC layout.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: LOGGED-IN DASHBOARD ==================== -->
+    <section id="viewDashboard" class="view-screen hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      
+      <!-- Welcome Member Banner -->
+      <div class="bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 border border-amber-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl mb-8 relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-slate-950 font-black text-2xl sm:text-3xl shadow-lg font-heading" id="dashAvatar">
+              VN
+            </div>
+            <div>
+              <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20 mb-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Active Registered Member
+              </div>
+              <h2 class="text-2xl sm:text-3xl font-black text-white font-heading" id="dashWelcomeName">Welcome, Youth Member</h2>
+              <p class="text-slate-400 text-xs sm:text-sm mt-0.5">V.NAYAK YOUTH MADHARAM • User ID: <span class="text-amber-400 font-semibold" id="dashUserId">@member</span></p>
+            </div>
+          </div>
+
+          <!-- Membership CTA -->
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="openMembershipView()" class="px-5 py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 shadow-lg shadow-orange-500/25 flex items-center gap-2 transition transform hover:-translate-y-0.5 font-display">
+              <i class="fa-solid fa-id-card"></i> Apply / View Membership Card
+            </button>
+            <button onclick="handleLogout()" class="px-4 py-3.5 rounded-xl font-semibold text-sm bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">
+              <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Detail Columns -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- User Profile Card -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+          <div class="border-b border-slate-800 pb-3 flex items-center justify-between">
+            <h3 class="text-base font-bold text-white flex items-center gap-2 font-heading">
+              <i class="fa-solid fa-user-circle text-amber-400"></i> My Profile Info
+            </h3>
+            <span class="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded font-mono">ST-COLONY</span>
+          </div>
+
+          <div class="space-y-3 text-sm">
+            <div>
+              <span class="text-xs text-slate-400 uppercase font-semibold block">Full Name</span>
+              <span class="text-white font-semibold" id="dashFullName">-</span>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 uppercase font-semibold block">Permanent User ID</span>
+              <span class="text-amber-400 font-mono font-bold" id="dashDetailUserId">-</span>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 uppercase font-semibold block">Registered Gmail</span>
+              <span class="text-slate-300 font-mono text-xs" id="dashEmail">-</span>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 uppercase font-semibold block">Phone Contact</span>
+              <span class="text-slate-300 font-mono" id="dashPhone">-</span>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 uppercase font-semibold block">Card Status</span>
+              <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/40 inline-block mt-1" id="dashCardStatus">
+                Application Pending
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Association Announcements & Notice Board -->
+        <div class="lg:col-span-2 bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          <div class="border-b border-slate-800 pb-3 flex items-center justify-between mb-4">
+            <h3 class="text-base font-bold text-white flex items-center gap-2 font-heading">
+              <i class="fa-solid fa-bullhorn text-amber-400"></i> Madharam Youth Bulletins
+            </h3>
+            <span class="text-xs text-slate-400"><i class="fa-solid fa-signal text-emerald-400 mr-1"></i> Live</span>
+          </div>
+
+          <div class="space-y-3">
+            <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+              <span class="p-2 rounded-lg bg-amber-500/10 text-amber-400 text-sm mt-0.5"><i class="fa-solid fa-cricket-bat-ball"></i></span>
+              <div>
+                <h4 class="text-sm font-bold text-white">Madharam Premier Cricket League</h4>
+                <p class="text-xs text-slate-400 mt-0.5">Registration open for local village youth teams. Official V.NAYAK YOUTH ID card is required for squad identity.</p>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+              <span class="p-2 rounded-lg bg-orange-500/10 text-orange-400 text-sm mt-0.5"><i class="fa-solid fa-handshake-angle"></i></span>
+              <div>
+                <h4 class="text-sm font-bold text-white">Youth Help & Emergency Helpline</h4>
+                <p class="text-xs text-slate-400 mt-0.5">For Singareni Mandal blood emergencies or administrative queries, call our 24/7 helplines <strong>9347624977</strong> or <strong>9100894417</strong>.</p>
+              </div>
+            </div>
+
+            <!-- Callout -->
+            <div class="p-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-transparent border border-amber-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
+              <div>
+                <div class="text-sm font-bold text-amber-300">Generate Your Official Youth Card</div>
+                <div class="text-xs text-slate-400">Upload your photograph (10 KB to 1 MB) and get your two-sided digital membership card.</div>
+              </div>
+              <button onclick="openMembershipView()" class="w-full sm:w-auto px-4 py-2.5 text-xs font-bold bg-amber-500 text-slate-950 rounded-lg hover:bg-amber-400 transition whitespace-nowrap shadow-md">
+                Membership Form <i class="fa-solid fa-arrow-right ml-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: MEMBERSHIP PORTAL & ID CARD ==================== -->
+    <section id="viewMembership" class="view-screen hidden max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <button onclick="switchView('dashboard')" class="text-xs font-semibold text-slate-400 hover:text-white mb-2 inline-flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-chevron-left"></i> Back to Dashboard
+          </button>
+          <h2 class="text-2xl sm:text-3xl font-black text-white font-heading">Youth Membership Portal</h2>
+          <p class="text-slate-400 text-xs sm:text-sm">V.NAYAK YOUTH MADHARAM • Complete the details to generate your certified ID card</p>
+        </div>
+        <button onclick="switchView('dashboard')" class="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Membership Input Form -->
+      <div id="membershipFormContainer" class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+        <form id="membershipForm" onsubmit="handleMembershipSubmit(event)" class="space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            
+            <!-- Surname -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Surname *</label>
+              <input type="text" id="mSurname" required placeholder="e.g., Vangala" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+            </div>
+
+            <!-- Last Name -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Last Name / Given Name *</label>
+              <input type="text" id="mLastName" required placeholder="e.g., Nayak" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+            </div>
+
+            <!-- Caste / Category -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Caste / Category *</label>
+              <input type="text" id="mCaste" required placeholder="e.g., ST / Lambada / BC / General" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+            </div>
+
+            <!-- Aadhaar Number -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Aadhaar No. (12 Digits) *</label>
+              <div class="relative">
+                <input type="text" id="mAadhaar" maxlength="14" placeholder="XXXX XXXX XXXX" required oninput="formatAadhaar(this)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+                <span class="absolute right-3 top-3.5 text-slate-500 text-xs font-mono" id="aadhaarCount">0/12</span>
+              </div>
+            </div>
+
+            <!-- Phone Number -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Phone Number *</label>
+              <input type="tel" id="mPhone" maxlength="10" required placeholder="10 Digit Mobile Number" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Registered Gmail *</label>
+              <input type="email" id="mEmail" required placeholder="username@gmail.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+            </div>
+
+          </div>
+
+          <!-- Photo Upload (STRICT 10 KB to 1 MB) -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+              Member Passport Photo (Strict Limit: 10 KB to 1 MB max | JPG, PNG, WEBP) *
+            </label>
+            <div class="p-4 bg-slate-950 border-2 border-dashed border-slate-800 rounded-2xl flex flex-col sm:flex-row items-center gap-5">
+              <div class="w-24 h-28 bg-slate-900 rounded-xl border border-slate-800 overflow-hidden flex items-center justify-center shrink-0 shadow-inner" id="photoPreviewContainer">
+                <i class="fa-solid fa-user text-3xl text-slate-600"></i>
+              </div>
+              <div class="flex-grow space-y-2 text-center sm:text-left">
+                <input type="file" id="mPhotoInput" accept="image/jpeg,image/jpg,image/png,image/webp" onchange="handlePhotoUpload(event)" class="hidden">
+                <div class="flex flex-wrap gap-2 justify-center sm:justify-start">
+                  <button type="button" onclick="document.getElementById('mPhotoInput').click()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white rounded-lg border border-slate-700 transition">
+                    <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Select Image File
+                  </button>
+                  <button type="button" onclick="loadDefaultSamplePhoto()" class="px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-xs font-semibold text-amber-300 rounded-lg border border-amber-500/30 transition">
+                    Load Quick Test Photo (~28 KB)
+                  </button>
+                </div>
+                <p class="text-xs text-slate-400">Accepted formats: .jpg, .jpeg, .png, .webp. File size must strictly be between <strong>10 KB and 1 MB</strong>.</p>
+                <div id="photoFeedback" class="text-xs font-medium"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Residential Local Address -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Residential / Street Address in Madharam Village *</label>
+            <textarea id="mAddress" rows="2" required placeholder="H.No, Street, ST-Colony, Madharam Village, Singareni Mandal, Khammam District" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 transition"></textarea>
+          </div>
+
+          <!-- Submit -->
+          <div class="pt-2">
+            <button type="submit" class="w-full py-4 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 font-black rounded-xl shadow-lg shadow-orange-500/25 transition text-sm font-display tracking-wider uppercase">
+              <i class="fa-solid fa-id-badge mr-2"></i> Submit & Generate Youth Membership Card
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Membership Card Result Container -->
+      <div id="membershipCardResult" class="hidden mt-8 space-y-6">
+        
+        <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-4 text-emerald-300 text-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+            <span>Youth Membership Card Generated! Both Front and Back are ready for Download or Print.</span>
+          </div>
+          <button onclick="editMembershipForm()" class="text-xs font-bold text-amber-400 hover:underline">
+            <i class="fa-solid fa-pen-to-square mr-1"></i> Edit Details
+          </button>
+        </div>
+
+        <!-- Card Action Controls -->
+        <div class="flex flex-wrap items-center justify-between gap-3 no-print bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
+          <div class="flex items-center gap-2">
+            <button onclick="toggleCardSide()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-bold text-xs rounded-xl transition flex items-center gap-2">
+              <i class="fa-solid fa-arrows-rotate"></i> Flip View (Front / Back)
+            </button>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="downloadMembershipCard('cardFront', 'Front')" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5">
+              <i class="fa-solid fa-download"></i> Download Front
+            </button>
+            <button onclick="downloadMembershipCard('cardBack', 'Back')" class="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5">
+              <i class="fa-solid fa-download"></i> Download Back
+            </button>
+            <button onclick="printMembershipCard()" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-110 text-slate-950 font-black text-xs rounded-xl shadow-md transition flex items-center gap-1.5">
+              <i class="fa-solid fa-print"></i> Print ID Card
+            </button>
+          </div>
+        </div>
+
+        <!-- PRINT AREA & DISPLAY CONTAINER -->
+        <div id="printAreaContainer" class="flex flex-col lg:flex-row items-center justify-center gap-8 py-4">
+          
+          <!-- ================= CARD FRONT ================= -->
+          <div id="cardFront" class="id-card-render rounded-2xl bg-gradient-to-b from-white via-slate-50 to-amber-50/50 text-slate-900 border-2 border-amber-600 p-4 flex flex-col justify-between relative overflow-hidden shrink-0 select-none">
+            
+            <!-- Top Gold Band Accent -->
+            <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-400"></div>
+
+            <!-- Background Watermark Emblem -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.06]">
+              <svg viewBox="0 0 200 200" class="w-72 h-72">
+                <circle cx="100" cy="100" r="90" fill="none" stroke="#000" stroke-width="6"/>
+                <path d="M100 40 L104 54 L112 52 L105 68 L103 76 L97 76 L95 68 L88 52 L96 54 Z" fill="#000"/>
+              </svg>
+            </div>
+
+            <!-- Card Header with Official Circular Emblem Replicated -->
+            <div class="flex items-center gap-2.5 border-b-2 border-amber-600 pb-2 relative z-10 pt-1">
+              <div class="w-12 h-12 rounded-full border border-amber-500 bg-white p-0.5 shrink-0 shadow-sm">
+                <!-- Circular Logo -->
+                <svg viewBox="0 0 200 200" class="w-full h-full">
+                  <defs>
+                    <linearGradient id="cardFrontTrishul" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#ea580c"/>
+                      <stop offset="40%" stop-color="#eab308"/>
+                      <stop offset="70%" stop-color="#0d9488"/>
+                      <stop offset="100%" stop-color="#0284c7"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="100" cy="100" r="95" fill="#ffffff" stroke="#991b1b" stroke-width="3" stroke-dasharray="6,2"/>
+                  <circle cx="100" cy="100" r="82" fill="none" stroke="#ea580c" stroke-width="2"/>
+                  <path id="cfTopArc" d="M 28 100 A 72 72 0 0 1 172 100" fill="none"/>
+                  <text font-family="'Cinzel', serif" font-weight="900" font-size="16.5" fill="#1e1b4b">
+                    <textPath href="#cfTopArc" startOffset="50%" text-anchor="middle">V NAYAK YOUTH</textPath>
+                  </text>
+                  <path id="cfBtmArc" d="M 172 105 A 72 72 0 0 1 28 105" fill="none"/>
+                  <text font-family="'Cinzel', serif" font-weight="900" font-size="15.5" fill="#1e1b4b">
+                    <textPath href="#cfBtmArc" startOffset="50%" text-anchor="middle">MADHARAM</textPath>
+                  </text>
+                  <polygon points="34,92 36,98 42,98 37,102 39,108 34,104 29,108 31,102 26,98 32,98" fill="#d97706"/>
+                  <polygon points="166,92 168,98 174,98 169,102 171,108 166,104 161,108 163,102 158,98 164,98" fill="#d97706"/>
+                  <path d="M100 38 L104 54 L112 52 L105 68 L103 76 L97 76 L95 68 L88 52 L96 54 Z" fill="url(#cardFrontTrishul)"/>
+                  <path d="M85 84 C72 76 60 90 68 102 C74 114 88 116 100 118 C114 120 126 130 124 144 C120 156 102 158 90 150 C78 142 72 132 70 124 L62 126 C66 142 78 158 96 162 C116 166 136 154 136 134 C136 118 120 110 104 106 C92 102 80 100 78 92 C76 86 82 80 90 82 Z" fill="url(#cardFrontTrishul)"/>
+                  <circle cx="114" cy="94" r="3" fill="#ea580c"/>
+                </svg>
+              </div>
+
+              <div>
+                <span class="text-[9px] font-black uppercase tracking-wider text-amber-700 block font-id">Youth Membership Identity Card</span>
+                <h3 class="text-sm font-black text-slate-900 leading-tight font-heading">V.NAYAK YOUTH MADHARAM</h3>
+                <span class="text-[8px] text-slate-600 block">Singareni Mandal, Khammam Dist. (TS) 507122</span>
+              </div>
+            </div>
+
+            <!-- Member Photo and Primary Details -->
+            <div class="flex flex-col items-center my-auto py-1 relative z-10">
+              <div class="w-24 h-28 rounded-xl border-2 border-amber-600 p-0.5 shadow-md bg-white mb-2 overflow-hidden">
+                <img id="cardPhoto" src="" alt="Youth Member" class="w-full h-full object-cover rounded-lg">
+              </div>
+
+              <div class="text-center mb-2">
+                <h4 class="text-sm font-black uppercase text-slate-900 tracking-wide font-heading" id="cardFullName">MEMBER NAME</h4>
+                <div class="inline-block bg-amber-100 text-amber-900 border border-amber-400 text-[10px] font-bold px-2.5 py-0.5 rounded font-mono mt-0.5" id="cardMemberId">
+                  ID: VNYM-2026-0000
+                </div>
+              </div>
+
+              <!-- Information Grid -->
+              <div class="w-full bg-amber-50/90 rounded-xl p-2.5 border border-amber-200 text-[10px] space-y-1 font-sans shadow-sm">
+                <div class="flex justify-between border-b border-amber-200/60 pb-1">
+                  <span class="text-slate-500 font-semibold">Caste / Category:</span>
+                  <span class="font-bold text-slate-800" id="cardCaste">-</span>
+                </div>
+                <div class="flex justify-between border-b border-amber-200/60 pb-1">
+                  <span class="text-slate-500 font-semibold">Aadhaar No:</span>
+                  <span class="font-bold font-mono text-slate-900" id="cardAadhaar">XXXX XXXX XXXX</span>
+                </div>
+                <div class="flex justify-between border-b border-amber-200/60 pb-1">
+                  <span class="text-slate-500 font-semibold">Phone:</span>
+                  <span class="font-bold font-mono text-slate-800" id="cardPhone">-</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-500 font-semibold">Membership Type:</span>
+                  <span class="font-bold text-emerald-700">Permanent Youth Member</span>
+                </div>
+              </div>
+
+              <!-- Barcode Generated with JsBarcode matching Membership ID -->
+              <div class="w-full flex flex-col items-center justify-center mt-2">
+                <svg id="barcodeSvg" class="w-48 h-10"></svg>
+              </div>
+            </div>
+
+            <!-- Card Bottom Signatures & Seal -->
+            <div class="pt-2 border-t border-amber-600/40 flex items-end justify-between relative z-10">
+              <div class="text-center">
+                <!-- Requested Signature: "v Nayak youth" in cursive calligraphy -->
+                <div class="font-signature text-2xl text-indigo-950 font-bold leading-none select-none tracking-wide">
+                  v Nayak youth
+                </div>
+                <div class="text-[7px] uppercase tracking-wider text-slate-600 font-bold border-t border-slate-300 mt-0.5 pt-0.5">Authorized Signatory</div>
+              </div>
+
+              <div class="text-center">
+                <div class="w-8 h-8 rounded-full border border-amber-600 bg-amber-50 flex items-center justify-center mx-auto text-amber-700 text-xs shadow-inner">
+                  <i class="fa-solid fa-stamp"></i>
+                </div>
+                <div class="text-[7px] font-black text-amber-800 uppercase tracking-tighter mt-0.5">VERIFIED SEAL</div>
+              </div>
+
+              <div class="text-right">
+                <div class="font-id font-bold text-xs text-slate-800">MADHARAM</div>
+                <div class="text-[7px] uppercase tracking-wider text-slate-500">Youth Committee</div>
+              </div>
+            </div>
+
+            <!-- Bottom Gold Accent -->
+            <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-400"></div>
+          </div>
+
+          <!-- ================= CARD BACK ================= -->
+          <div id="cardBack" class="id-card-render rounded-2xl bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 text-slate-100 border-2 border-amber-500 shadow-2xl p-4 flex flex-col justify-between relative overflow-hidden shrink-0 select-none">
+            
+            <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600"></div>
+
+            <!-- Back Header with Logo Mini -->
+            <div class="text-center border-b border-slate-800 pb-2 pt-1 flex items-center justify-center gap-2">
+              <div class="w-7 h-7 rounded-full bg-white p-0.5 border border-amber-500">
+                <svg viewBox="0 0 200 200" class="w-full h-full">
+                  <circle cx="100" cy="100" r="90" fill="#fff" stroke="#ea580c" stroke-width="4"/>
+                  <path d="M100 40 L104 54 L112 52 L105 68 L103 76 L97 76 L95 68 L88 52 L96 54 Z" fill="#ea580c"/>
+                </svg>
+              </div>
+              <div>
+                <div class="text-[8px] uppercase font-bold tracking-widest text-amber-400 font-id">Telangana Rural Youth Organization</div>
+                <h4 class="text-xs font-black text-white font-heading">V.NAYAK YOUTH MADHARAM</h4>
+              </div>
+            </div>
+
+            <!-- Card Back Content -->
+            <div class="space-y-2.5 text-[10px] text-slate-300 leading-relaxed my-auto">
+              
+              <!-- Address -->
+              <div class="p-3 bg-slate-950/90 rounded-xl border border-amber-500/30 shadow-inner">
+                <div class="font-bold text-amber-400 uppercase text-[9px] mb-1 flex items-center gap-1.5 font-id tracking-wider">
+                  <i class="fa-solid fa-map-location-dot"></i> Permanent Association Address:
+                </div>
+                <p class="text-slate-100 font-semibold leading-relaxed text-[10.5px]">
+                  ST-Colony, Madharam Village,<br/>
+                  Singareni MLD, Khammam District,<br/>
+                  Telangana State - 507122
+                </p>
+              </div>
+
+              <!-- Member Residential Address -->
+              <div class="p-2.5 bg-slate-950/60 rounded-xl border border-slate-800">
+                <div class="font-bold text-slate-400 uppercase text-[8.5px] mb-0.5">Member Local Residence:</div>
+                <div id="cardBackAddress" class="text-slate-200 italic font-sans text-[10px]">ST-Colony, Madharam Village</div>
+              </div>
+
+              <!-- Youth Declaration Points -->
+              <div class="p-2.5 bg-slate-950/60 rounded-xl border border-slate-800">
+                <div class="font-bold text-amber-400 uppercase text-[8.5px] mb-1">Youth Rules & Declaration:</div>
+                <ul class="list-disc pl-3.5 space-y-0.5 text-slate-400 text-[8.5px]">
+                  <li>Strictly authorized for Madharam village youth sports and social initiatives.</li>
+                  <li>Members must uphold village discipline, anti-addiction rules, and brotherhood.</li>
+                  <li>In case of emergency or loss, contact the secretariat helplines immediately.</li>
+                </ul>
+              </div>
+
+              <!-- Official Helplines & Mail -->
+              <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/25 space-y-1 text-[9px]">
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-400"><i class="fa-solid fa-phone text-amber-400 mr-1"></i> Helpline 1:</span>
+                  <span class="font-bold text-amber-300 font-mono text-[10px]">9347624977</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-400"><i class="fa-solid fa-phone text-amber-400 mr-1"></i> Helpline 2:</span>
+                  <span class="font-bold text-amber-300 font-mono text-[10px]">9100894417</span>
+                </div>
+                <div class="flex items-center justify-between border-t border-amber-500/20 pt-1">
+                  <span class="text-slate-400"><i class="fa-solid fa-envelope text-amber-400 mr-1"></i> Email:</span>
+                  <span class="font-mono text-[9px] text-slate-200">mrwhitedevil2003@gmail.com</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Back Barcode -->
+            <div class="text-center pt-2 border-t border-slate-800 flex flex-col items-center">
+              <svg id="barcodeBackSvg" class="w-40 h-8 opacity-80"></svg>
+              <div class="text-[7.5px] text-slate-500 uppercase tracking-wider mt-0.5">
+                Singareni MLD • Khammam Dist. • Telangana 507122
+              </div>
+            </div>
+
+            <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600"></div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==================== MODAL: LOGIN ==================== -->
+  <div id="modalLogin" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-amber-500/30 w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+      <button onclick="closeModal('modalLogin')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-1 rounded-lg">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 bg-white rounded-full p-1 border-2 border-amber-500 mx-auto mb-2.5 shadow-lg flex items-center justify-center">
+          <svg viewBox="0 0 200 200" class="w-full h-full">
+            <circle cx="100" cy="100" r="92" fill="#ffffff" stroke="#c2410c" stroke-width="4"/>
+            <path d="M100 40 L104 54 L112 52 L105 68 L103 76 L97 76 L95 68 L88 52 L96 54 Z" fill="#ea580c"/>
+            <path d="M85 84 C72 76 60 90 68 102 C74 114 88 116 100 118 C114 120 126 130 124 144 C120 156 102 158 90 150 Z" fill="#ea580c"/>
+          </svg>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-black text-white font-heading">Youth Portal Login</h2>
+        <p class="text-xs text-amber-400 mt-0.5 font-id tracking-wider">V.NAYAK YOUTH MADHARAM</p>
+      </div>
+
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+        <!-- User ID -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">User ID / Username *</label>
+          <div class="relative">
+            <i class="fa-solid fa-user absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
+            <input type="text" id="loginUserId" required placeholder="Enter your registered User ID" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Password *</label>
+          <div class="relative">
+            <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
+            <input type="password" id="loginPassword" required placeholder="Enter password" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-10 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+            <button type="button" onclick="togglePasswordVisibility('loginPassword', this)" class="absolute right-3 top-2.5 text-slate-500 hover:text-slate-300">
+              <i class="fa-solid fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Security Captcha -->
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300">Security Captcha *</label>
+            <span class="text-[10px] text-amber-400">Refreshed every login</span>
+          </div>
+          <div class="flex items-center gap-2 mb-2">
+            <div id="captchaTextDisplay" class="captcha-display flex-grow h-11 rounded-xl flex items-center justify-center font-mono font-black text-xl text-amber-300 border border-amber-500/40 shadow-inner">
+              ----
+            </div>
+            <button type="button" onclick="generateCaptcha()" class="h-11 px-3.5 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-xl border border-slate-700 transition" title="Change Captcha">
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+          </div>
+          <input type="text" id="loginCaptchaInput" required placeholder="Type the characters shown above" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono uppercase transition">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 font-black rounded-xl text-sm shadow-lg shadow-orange-500/25 transition font-display">
+          Sign In to Youth Portal <i class="fa-solid fa-arrow-right ml-1"></i>
+        </button>
+      </form>
+
+      <!-- Bottom New Registration Link -->
+      <div class="mt-6 pt-5 border-t border-slate-800 text-center">
+        <p class="text-xs text-slate-400 mb-2">New youth member in Madharam village?</p>
+        <button onclick="switchToRegistration()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-semibold text-xs rounded-xl transition">
+          <i class="fa-solid fa-user-plus mr-1.5"></i> Create New Registration
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: REGISTRATION ==================== -->
+  <div id="modalRegistration" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 hidden overflow-y-auto">
+    <div class="bg-slate-900 border border-amber-500/30 w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl relative my-8">
+      <button onclick="closeModal('modalRegistration')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-1 rounded-lg">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-2 text-xl">
+          <i class="fa-solid fa-user-plus"></i>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-black text-white font-heading">Youth New Registration</h2>
+        <p class="text-xs text-slate-400 mt-0.5">V.NAYAK YOUTH MADHARAM • Join our community</p>
+      </div>
+
+      <form id="registrationForm" onsubmit="handleRegistrationSubmit(event)" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- Surname -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Surname *</label>
+            <input type="text" id="regSurname" required placeholder="e.g., Vangala" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+          </div>
+
+          <!-- Last Name -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Last Name *</label>
+            <input type="text" id="regLastName" required placeholder="e.g., Nayak" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+          </div>
+        </div>
+
+        <!-- New User ID -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">New User ID (Permanent) *</label>
+          <div class="relative">
+            <span class="absolute left-3.5 top-2.5 text-amber-400 text-xs font-mono">@</span>
+            <input type="text" id="regUserId" required placeholder="e.g., vnayak_youth" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-8 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+          </div>
+          <p class="text-[10px] text-slate-400 mt-1">Once created, this User ID is permanent and allows you to login directly without registering again.</p>
+        </div>
+
+        <!-- Passwords -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Password *</label>
+            <input type="password" id="regPassword" required minlength="6" placeholder="At least 6 chars" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Confirm Password *</label>
+            <input type="password" id="regConfirmPassword" required minlength="6" placeholder="Repeat password" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Registered Gmail Address *</label>
+          <input type="email" id="regEmail" required placeholder="yourname@gmail.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+          <p class="text-[11px] text-slate-400 mt-1"><i class="fa-solid fa-envelope mr-1 text-amber-400"></i> Confirmation email will be routed to your registered Gmail and cc'd to mrwhitedevil2003@gmail.com.</p>
+        </div>
+
+        <!-- Phone Number -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Phone Number (10 Digits) *</label>
+          <input type="tel" id="regPhone" pattern="[0-9]{10}" maxlength="10" required placeholder="e.g., 9876543210" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+        </div>
+
+        <!-- Submit Registration -->
+        <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 font-black rounded-xl text-sm shadow-lg shadow-orange-500/25 transition mt-2 font-display">
+          <i class="fa-solid fa-paper-plane mr-1.5"></i> Submit Registration
+        </button>
+      </form>
+
+      <!-- Back to login link -->
+      <div class="mt-4 text-center">
+        <button onclick="switchToLogin()" class="text-xs text-slate-400 hover:text-amber-400 transition">
+          Already registered? <span class="text-amber-400 font-semibold underline">Login here</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-slate-950 border-t border-slate-800/80 py-8 mt-12 text-center text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-left">
+        <p class="font-bold text-slate-200 font-heading text-sm">V.NAYAK YOUTH MADHARAM</p>
+        <p class="text-[11px] text-slate-400 mt-0.5">ST-Colony, Madharam Village, Singareni MLD, Khammam District, Telangana 507122</p>
+        <p class="text-[11px] text-amber-400 font-mono mt-0.5">Helplines: 9347624977, 9100894417 | Email: mrwhitedevil2003@gmail.com</p>
+      </div>
+      <div class="flex gap-4 text-base text-slate-400">
+        <a href="tel:9347624977" class="hover:text-amber-400 transition" title="Call Helpline"><i class="fa-solid fa-phone"></i></a>
+        <a href="mailto:mrwhitedevil2003@gmail.com" class="hover:text-amber-400 transition" title="Email Admin"><i class="fa-solid fa-envelope"></i></a>
+        <span class="text-slate-500 text-[11px] self-center">© 2026 Madharam Youth Committee</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // State management
+    let currentUser = null;
+    let currentCaptcha = "";
+    let uploadedPhotoBase64 = null;
+    let photoFileSizeKB = 0;
+
+    // Persistent storage keys
+    const USERS_STORAGE_KEY = "vnayak_youth_persistent_users";
+    const SESSION_STORAGE_KEY = "vnayak_youth_active_session";
+    const MEMBERSHIP_STORAGE_KEY = "vnayak_youth_member_card_";
+
+    // Initialize database with a persistent default user for immediate testing
+    function initDatabase() {
+      let users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || "{}");
+      if (!users["nayak"]) {
+        users["nayak"] = {
+          surname: "Vangala",
+          lastName: "Nayak",
+          userId: "nayak",
+          password: "password123",
+          email: "mrwhitedevil2003@gmail.com",
+          phone: "9347624977"
+        };
+        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+      }
+    }
+
+    // View Switcher logic
+    function switchView(viewName) {
+      document.getElementById('viewWelcome').classList.add('hidden');
+      document.getElementById('viewDashboard').classList.add('hidden');
+      document.getElementById('viewMembership').classList.add('hidden');
+
+      if (viewName === 'welcome') {
+        document.getElementById('viewWelcome').classList.remove('hidden');
+      } else if (viewName === 'dashboard') {
+        if (!currentUser) {
+          openLoginModal();
+          return;
+        }
+        renderDashboard();
+        document.getElementById('viewDashboard').classList.remove('hidden');
+      } else if (viewName === 'membership') {
+        if (!currentUser) {
+          openLoginModal();
+          return;
+        }
+        prepareMembershipForm();
+        document.getElementById('viewMembership').classList.remove('hidden');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Modal controls
+    function openLoginModal() {
+      generateCaptcha();
+      document.getElementById('modalRegistration').classList.add('hidden');
+      document.getElementById('modalLogin').classList.remove('hidden');
+    }
+
+    function openRegistrationModal() {
+      document.getElementById('modalLogin').classList.add('hidden');
+      document.getElementById('modalRegistration').classList.remove('hidden');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.add('hidden');
+    }
+
+    function switchToRegistration() {
+      closeModal('modalLogin');
+      openRegistrationModal();
+    }
+
+    function switchToLogin() {
+      closeModal('modalRegistration');
+      openLoginModal();
+    }
+
+    function togglePasswordVisibility(fieldId, btn) {
+      const input = document.getElementById(fieldId);
+      const icon = btn.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+
+    // Dynamic Captcha Generator: refreshed every login attempt
+    function generateCaptcha() {
+      const chars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+      let res = "";
+      for (let i = 0; i < 5; i++) {
+        res += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      currentCaptcha = res;
+      const display = document.getElementById('captchaTextDisplay');
+      if (display) {
+        display.textContent = res;
+        display.style.transform = `rotate(${Math.floor(Math.random() * 6) - 3}deg)`;
+      }
+      const input = document.getElementById('loginCaptchaInput');
+      if (input) input.value = "";
+    }
+
+    // Interactive Toast Notification
+    function showToast(title, message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `p-4 rounded-2xl shadow-2xl border pointer-events-auto transform transition-all duration-300 translate-y-2 opacity-0 flex items-start gap-3 text-sm ${
+        type === 'success' 
+          ? 'bg-slate-900/95 border-emerald-500 text-emerald-100' 
+          : type === 'error'
+          ? 'bg-slate-900/95 border-rose-500 text-rose-100'
+          : 'bg-slate-900/95 border-amber-500 text-amber-100'
+      }`;
+
+      const iconClass = type === 'success' ? 'fa-circle-check text-emerald-400' : type === 'error' ? 'fa-circle-exclamation text-rose-400' : 'fa-bell text-amber-400';
+      toast.innerHTML = `
+        <i class="fa-solid ${iconClass} text-lg mt-0.5"></i>
+        <div class="flex-grow">
+          <div class="font-bold text-xs uppercase tracking-wide font-heading">${title}</div>
+          <div class="text-xs mt-0.5 leading-relaxed">${message}</div>
+        </div>
+        <button class="text-slate-400 hover:text-white text-xs" onclick="this.parentElement.remove()"><i class="fa-solid fa-xmark"></i></button>
+      `;
+
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 15);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 400);
+      }, 6000);
+    }
+
+    // Handle Login Submission
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const userId = document.getElementById('loginUserId').value.trim().toLowerCase();
+      const pass = document.getElementById('loginPassword').value;
+      const captchaInput = document.getElementById('loginCaptchaInput').value.trim().toUpperCase();
+
+      if (captchaInput !== currentCaptcha) {
+        showToast('Captcha Incorrect', 'Invalid security code. A new dynamic captcha code has been generated.', 'error');
+        generateCaptcha();
+        return;
+      }
+
+      // Check persistent registered storage
+      const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || "{}");
+      const user = users[userId];
+
+      if (!user || user.password !== pass) {
+        showToast('Login Failed', 'Invalid User ID or Password. Please check credentials or register.', 'error');
+        generateCaptcha();
+        return;
+      }
+
+      // Login Successful
+      currentUser = user;
+      sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(user));
+      updateNavState();
+      closeModal('modalLogin');
+      showToast('Welcome Back!', `Logged in successfully as ${user.surname} ${user.lastName}`, 'success');
+      switchView('dashboard');
+    }
+
+    // Handle Registration Submission
+    function handleRegistrationSubmit(e) {
+      e.preventDefault();
+      const surname = document.getElementById('regSurname').value.trim();
+      const lastName = document.getElementById('regLastName').value.trim();
+      const userId = document.getElementById('regUserId').value.trim().toLowerCase();
+      const pass = document.getElementById('regPassword').value;
+      const confirmPass = document.getElementById('regConfirmPassword').value;
+      const email = document.getElementById('regEmail').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+
+      if (pass !== confirmPass) {
+        showToast('Password Mismatch', 'Password and Confirm Password must match exactly.', 'error');
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || "{}");
+      if (users[userId]) {
+        showToast('User ID Exists', 'This User ID is already registered! Please log in or choose a unique ID.', 'error');
+        return;
+      }
+
+      // Save permanently in localStorage (no need to register again)
+      const newUser = { surname, lastName, userId, email, phone, password: pass };
+      users[userId] = newUser;
+      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+
+      // Automated email notification toast
+      showToast(
+        'Registration Successful!',
+        `Confirmation email dispatched to: ${email} (cc: mrwhitedevil2003@gmail.com). You can now login with User ID: "${userId}".`,
+        'success'
+      );
+
+      // Clear form, navigate to login modal, and auto-populate user id
+      document.getElementById('registrationForm').reset();
+      switchToLogin();
+      document.getElementById('loginUserId').value = userId;
+    }
+
+    function handleLogout() {
+      currentUser = null;
+      sessionStorage.removeItem(SESSION_STORAGE_KEY);
+      updateNavState();
+      showToast('Signed Out', 'You have been safely signed out.', 'info');
+      switchView('welcome');
+    }
+
+    function updateNavState() {
+      const guestGroup = document.getElementById('navGuestGroup');
+      const userGroup = document.getElementById('navUserGroup');
+      if (currentUser) {
+        guestGroup.classList.add('hidden');
+        userGroup.classList.remove('hidden');
+        userGroup.classList.add('flex');
+        document.getElementById('navAvatarInitial').textContent = (currentUser.lastName || 'U').charAt(0).toUpperCase();
+      } else {
+        guestGroup.classList.remove('hidden');
+        userGroup.classList.add('hidden');
+        userGroup.classList.remove('flex');
+      }
+    }
+
+    function renderDashboard() {
+      if (!currentUser) return;
+      const fullName = `${currentUser.surname} ${currentUser.lastName}`;
+      document.getElementById('dashWelcomeName').textContent = `Welcome, ${fullName}`;
+      document.getElementById('dashUserId').textContent = `@${currentUser.userId}`;
+      document.getElementById('dashAvatar').textContent = `${currentUser.surname.charAt(0)}${currentUser.lastName.charAt(0)}`.toUpperCase();
+      document.getElementById('dashFullName').textContent = fullName;
+      document.getElementById('dashDetailUserId').textContent = `@${currentUser.userId}`;
+      document.getElementById('dashEmail').textContent = currentUser.email;
+      document.getElementById('dashPhone').textContent = currentUser.phone;
+
+      // Check if membership card exists
+      const savedCard = localStorage.getItem(MEMBERSHIP_STORAGE_KEY + currentUser.userId);
+      const statusBadge = document.getElementById('dashCardStatus');
+      if (savedCard) {
+        statusBadge.className = "text-xs font-bold px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 inline-block mt-1";
+        statusBadge.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> Membership ID Active';
+      } else {
+        statusBadge.className = "text-xs font-bold px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/40 inline-block mt-1";
+        statusBadge.innerHTML = '<i class="fa-solid fa-clock mr-1"></i> Application Pending';
+      }
+    }
+
+    function openMembershipView() {
+      switchView('membership');
+    }
+
+    function prepareMembershipForm() {
+      if (!currentUser) return;
+      document.getElementById('mSurname').value = currentUser.surname || '';
+      document.getElementById('mLastName').value = currentUser.lastName || '';
+      document.getElementById('mPhone').value = currentUser.phone || '';
+      document.getElementById('mEmail').value = currentUser.email || '';
+
+      const savedCard = localStorage.getItem(MEMBERSHIP_STORAGE_KEY + currentUser.userId);
+      if (savedCard) {
+        const cardData = JSON.parse(savedCard);
+        displayMembershipCard(cardData);
+      } else {
+        document.getElementById('membershipFormContainer').classList.remove('hidden');
+        document.getElementById('membershipCardResult').classList.add('hidden');
+      }
+    }
+
+    function formatAadhaar(input) {
+      let v = input.value.replace(/\D/g, '').slice(0, 12);
+      document.getElementById('aadhaarCount').textContent = `${v.length}/12`;
+      let formatted = '';
+      for (let i = 0; i < v.length; i++) {
+        if (i > 0 && i % 4 === 0) formatted += ' ';
+        formatted += v[i];
+      }
+      input.value = formatted;
+    }
+
+    // Photo Validation: strictly between 10 KB and 1 MB (1024 KB)
+    function handlePhotoUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const sizeKB = file.size / 1024;
+      photoFileSizeKB = parseFloat(sizeKB.toFixed(2));
+      const feedback = document.getElementById('photoFeedback');
+
+      // STRICT CHECK: 10 KB to 1 MB (1024 KB)
+      if (photoFileSizeKB < 10.0 || photoFileSizeKB > 1024.0) {
+        uploadedPhotoBase64 = null;
+        feedback.className = "text-xs font-semibold text-rose-400";
+        feedback.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> File size is <strong>${photoFileSizeKB} KB</strong>. Rejected! Image must be between <strong>10 KB and 1 MB</strong>.`;
+        document.getElementById('photoPreviewContainer').innerHTML = '<i class="fa-solid fa-user-xmark text-3xl text-rose-400"></i>';
+        return;
+      }
+
+      // Valid size
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        uploadedPhotoBase64 = e.target.result;
+        feedback.className = "text-xs font-semibold text-emerald-400";
+        feedback.innerHTML = `<i class="fa-solid fa-check-circle mr-1"></i> Valid photo (${photoFileSizeKB} KB)! Ready for ID card.`;
+        document.getElementById('photoPreviewContainer').innerHTML = `<img src="${uploadedPhotoBase64}" class="w-full h-full object-cover">`;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Helper: generate sample photo between 10 KB and 1 MB
+    function loadDefaultSamplePhoto() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 320;
+      canvas.height = 380;
+      const ctx = canvas.getContext('2d');
+
+      const grad = ctx.createLinearGradient(0, 0, 320, 380);
+      grad.addColorStop(0, '#0f172a');
+      grad.addColorStop(1, '#1e1b4b');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 320, 380);
+
+      // Gold avatar portrait
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.arc(160, 140, 60, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(160, 350, 110, 0, Math.PI, true);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 16px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('MADHARAM YOUTH', 160, 235);
+
+      let dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+      let approxKB = (dataUrl.length * (3 / 4)) / 1024;
+
+      uploadedPhotoBase64 = dataUrl;
+      photoFileSizeKB = parseFloat(approxKB.toFixed(1));
+
+      const feedback = document.getElementById('photoFeedback');
+      feedback.className = "text-xs font-semibold text-emerald-400";
+      feedback.innerHTML = `<i class="fa-solid fa-check-circle mr-1"></i> Sample photo loaded (${photoFileSizeKB} KB). Meets 10 KB - 1 MB rule.`;
+      document.getElementById('photoPreviewContainer').innerHTML = `<img src="${uploadedPhotoBase64}" class="w-full h-full object-cover">`;
+    }
+
+    // Membership Form Submission
+    function handleMembershipSubmit(e) {
+      e.preventDefault();
+      if (!currentUser) return;
+
+      const surname = document.getElementById('mSurname').value.trim();
+      const lastName = document.getElementById('mLastName').value.trim();
+      const caste = document.getElementById('mCaste').value.trim();
+      const rawAadhaar = document.getElementById('mAadhaar').value.replace(/\D/g, '');
+      const phone = document.getElementById('mPhone').value.trim();
+      const email = document.getElementById('mEmail').value.trim();
+      const address = document.getElementById('mAddress').value.trim();
+
+      if (rawAadhaar.length !== 12) {
+        showToast('Invalid Aadhaar', 'Aadhaar number must be exactly 12 digits.', 'error');
+        return;
+      }
+
+      if (!uploadedPhotoBase64) {
+        showToast('Photo Missing', 'Please upload a photo between 10 KB and 1 MB.', 'error');
+        return;
+      }
+
+      // Generate consistent membership ID
+      const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+      const membershipId = `VNYM-2026-${randomSuffix}`;
+      const maskedAadhaar = `XXXX XXXX ${rawAadhaar.slice(8)}`;
+
+      const cardData = {
+        fullName: `${surname} ${lastName}`,
+        surname,
+        lastName,
+        caste,
+        aadhaar: maskedAadhaar,
+        phone,
+        email,
+        address,
+        membershipId,
+        photo: uploadedPhotoBase64,
+        dateIssued: new Date().toLocaleDateString('en-IN')
+      };
+
+      // Save to localStorage for this user
+      localStorage.setItem(MEMBERSHIP_STORAGE_KEY + currentUser.userId, JSON.stringify(cardData));
+      showToast('Card Created!', 'PVC Membership ID Card generated with scannable barcode and signature.', 'success');
+      displayMembershipCard(cardData);
+    }
+
+    // Render the Membership Card with JsBarcode
+    function displayMembershipCard(data) {
+      document.getElementById('membershipFormContainer').classList.add('hidden');
+      document.getElementById('membershipCardResult').classList.remove('hidden');
+
+      document.getElementById('cardPhoto').src = data.photo;
+      document.getElementById('cardFullName').textContent = data.fullName;
+      document.getElementById('cardMemberId').textContent = `ID: ${data.membershipId}`;
+      document.getElementById('cardCaste').textContent = data.caste;
+      document.getElementById('cardAadhaar').textContent = data.aadhaar;
+      document.getElementById('cardPhone').textContent = data.phone;
+      document.getElementById('cardBackAddress').textContent = data.address;
+
+      // Render Barcodes via JsBarcode using data.membershipId
+      try {
+        JsBarcode("#barcodeSvg", data.membershipId, {
+          format: "CODE128",
+          lineColor: "#0f172a",
+          width: 1.6,
+          height: 32,
+          displayValue: true,
+          fontSize: 10,
+          font: "Rajdhani",
+          margin: 0
+        });
+
+        JsBarcode("#barcodeBackSvg", data.membershipId, {
+          format: "CODE128",
+          lineColor: "#f59e0b",
+          width: 1.4,
+          height: 26,
+          displayValue: true,
+          fontSize: 9,
+          font: "Rajdhani",
+          margin: 0
+        });
+      } catch (err) {
+        console.error("Barcode generation error:", err);
+      }
+    }
+
+    function editMembershipForm() {
+      document.getElementById('membershipFormContainer').classList.remove('hidden');
+      document.getElementById('membershipCardResult').classList.add('hidden');
+    }
+
+    // Toggle Front / Back preview
+    let isFrontActive = true;
+    function toggleCardSide() {
+      const front = document.getElementById('cardFront');
+      const back = document.getElementById('cardBack');
+      if (isFrontActive) {
+        front.classList.add('hidden');
+        back.classList.remove('hidden');
+        isFrontActive = false;
+        showToast('Card Flipped', 'Showing Back of Membership Card', 'info');
+      } else {
+        front.classList.remove('hidden');
+        back.classList.add('hidden');
+        isFrontActive = true;
+        showToast('Card Flipped', 'Showing Front of Membership Card', 'info');
+      }
+    }
+
+    // Print Handler: reveals both cards for print media query
+    function printMembershipCard() {
+      document.getElementById('cardFront').classList.remove('hidden');
+      document.getElementById('cardBack').classList.remove('hidden');
+      window.print();
+    }
+
+    // Download Handler: downloads crisp PNG image using html2canvas
+    function downloadMembershipCard(elementId, sideName) {
+      const cardElement = document.getElementById(elementId);
+      const wasHidden = cardElement.classList.contains('hidden');
+      if (wasHidden) cardElement.classList.remove('hidden');
+
+      showToast('Rendering Download', `Generating high-resolution ${sideName} ID card image...`, 'info');
+
+      html2canvas(cardElement, {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: null
+      }).then(canvas => {
+        if (wasHidden) cardElement.classList.add('hidden');
+        const link = document.createElement('a');
+        link.download = `V_NAYAK_YOUTH_${sideName.toUpperCase()}_${currentUser ? currentUser.userId : 'CARD'}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('Downloaded!', `${sideName} card saved successfully to your gallery / downloads.`, 'success');
+      }).catch(err => {
+        if (wasHidden) cardElement.classList.add('hidden');
+        showToast('Download Error', 'Could not generate card: ' + err.message, 'error');
+      });
+    }
+
+    // Application Initialization
+    window.onload = function() {
+      initDatabase();
+      generateCaptcha();
+      const savedSession = sessionStorage.getItem(SESSION_STORAGE_KEY);
+      if (savedSession) {
+        currentUser = JSON.parse(savedSession);
+        updateNavState();
+      }
+    };
+  </script>
+</body>
+</html>

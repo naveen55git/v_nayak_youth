@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}Secretariat Admin Panel - V.NAYAK YOUTH ASSOCIATION{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 border-b border-slate-800 pb-5">
+    <div>
+      <span class="text-xs font-bold uppercase tracking-widest text-red-400 font-id flex items-center gap-1.5">
+        <i class="fa-solid fa-crown text-amber-400"></i> Master Secretariat Controls
+      </span>
+      <h2 class="text-2xl sm:text-3xl font-black text-white font-heading mt-0.5">Association Admin Dashboard</h2>
+      <p class="text-xs sm:text-sm text-slate-400">Manage upcoming portal features, member grievances, and community sponsorships.</p>
+    </div>
+
+    <a href="{% url 'logout' %}" class="px-4 py-2 text-xs font-bold bg-rose-500/20 text-rose-300 hover:bg-rose-500 hover:text-white rounded-xl transition flex items-center gap-1.5">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+    </a>
+  </div>
+
+  <!-- Add Upcoming Feature & Link Module -->
+  <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl mb-10">
+    <h3 class="text-base font-bold text-white mb-1 flex items-center gap-2">
+      <i class="fa-solid fa-plus-circle text-amber-400"></i> Publish New Upcoming Feature / Announcement / Link
+    </h3>
+    <p class="text-xs text-slate-400 mb-4">Add exciting new features or official URLs that will instantly appear on the public homepage for all youth members.</p>
+
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+      <input type="hidden" name="add_feature" value="1">
+      
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Feature Title *</label>
+          {{ feat_form.title }}
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Badge Tag *</label>
+          {{ feat_form.badge }}
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">External Link / URL (Optional)</label>
+          {{ feat_form.link }}
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Feature Description *</label>
+        {{ feat_form.description }}
+      </div>
+
+      <button type="submit" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-110 text-slate-950 font-black rounded-xl text-xs sm:text-sm font-display shadow-lg flex items-center gap-2">
+        <i class="fa-solid fa-bullhorn"></i> Publish Feature to Website
+      </button>
+    </form>
+  </div>
+
+  <!-- Admin Overview Sections -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    
+    <!-- Complaints Queue -->
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-inbox text-rose-400"></i> Youth Grievances Review
+        </h3>
+        <span class="text-xs bg-rose-500/20 text-rose-300 px-2.5 py-0.5 rounded-full font-mono font-bold">
+          {{ complaints.count }} Total
+        </span>
+      </div>
+
+      <div class="space-y-3 max-h-96 overflow-y-auto pr-1">
+        {% for cp in complaints %}
+          <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
+            <div class="flex items-center justify-between">
+              <strong class="text-white">{{ cp.subject }}</strong>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase
+                {% if cp.status == 'RESOLVED' %}bg-emerald-500/20 text-emerald-300
+                {% elif cp.status == 'IN_PROGRESS' %}bg-amber-500/20 text-amber-300
+                {% else %}bg-rose-500/20 text-rose-300{% endif %}">
+                {{ cp.get_status_display }}
+              </span>
+            </div>
+            <p class="text-slate-400">{{ cp.description }}</p>
+            <div class="text-[10px] text-slate-500 flex justify-between pt-1 border-t border-slate-900">
+              <span>By: {{ cp.name_or_id }} (+91 {{ cp.phone }})</span>
+              <span>{{ cp.created_at|date:"d M Y" }}</span>
+            </div>
+          </div>
+        {% empty %}
+          <p class="text-xs text-slate-500 text-center py-6">No grievances in queue.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Financial Sponsors Log -->
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-hand-holding-dollar text-emerald-400"></i> Financial Sponsors Log
+        </h3>
+        <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full font-mono font-bold">
+          {{ sponsors.count }} Total
+        </span>
+      </div>
+
+      <div class="space-y-3 max-h-96 overflow-y-auto pr-1">
+        {% for sp in sponsors %}
+          <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between gap-3 text-xs">
+            <div>
+              <strong class="text-white">{{ sp.name }}</strong>
+              <p class="text-[11px] text-slate-400">+91 {{ sp.phone }} • {{ sp.message|default:"Madharam Youth" }}</p>
+              <span class="text-[10px] text-slate-500">{{ sp.created_at|date:"d M Y" }}</span>
+            </div>
+            <div class="text-right">
+              <span class="text-sm font-black text-emerald-400 font-mono">₹{{ sp.amount }}</span>
+              {% if sp.screenshot %}
+                <a href="{{ sp.screenshot.url }}" target="_blank" class="block text-[10px] text-amber-400 hover:underline mt-0.5">View Slip</a>
+              {% endif %}
+            </div>
+          </div>
+        {% empty %}
+          <p class="text-xs text-slate-500 text-center py-6">No sponsors recorded yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

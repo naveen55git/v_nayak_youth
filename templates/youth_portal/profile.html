@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile - V.NAYAK YOUTH ASSOCIATION{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+    <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+      <div>
+        <h2 class="text-xl sm:text-2xl font-black text-white font-heading">Youth Member Profile</h2>
+        <p class="text-xs text-slate-400">Manage your association personal details and profile avatar.</p>
+      </div>
+      <span class="px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-bold font-mono">
+        @{{ user.username }}
+      </span>
+    </div>
+
+    {% if form.errors %}
+      <div class="mb-5 p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs">
+        {% for field in form %}
+          {% for error in field.errors %}
+            <div>{{ field.label }}: {{ error }}</div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-5">
+      {% csrf_token %}
+      
+      <!-- Avatar Picture Upload -->
+      <div class="flex flex-col sm:flex-row items-center gap-6 p-4 bg-slate-950 rounded-2xl border border-slate-800">
+        <div class="w-24 h-24 rounded-2xl overflow-hidden border-2 border-amber-500 shadow-md relative bg-slate-900 flex items-center justify-center shrink-0">
+          {% if user.avatar %}
+            <img src="{{ user.avatar.url }}" alt="{{ user.username }}" class="w-full h-full object-cover">
+          {% elif user.photo %}
+            <img src="{{ user.photo.url }}" alt="{{ user.username }}" class="w-full h-full object-cover">
+          {% else %}
+            <div class="text-3xl font-black text-amber-400 font-heading">
+              {{ user.surname|default:user.username|slice:":1"|upper }}
+            </div>
+          {% endif %}
+        </div>
+        <div class="space-y-2 text-center sm:text-left">
+          <label class="block text-xs font-bold uppercase text-slate-300">Member Avatar / Profile Photo</label>
+          {{ form.avatar }}
+          <p class="text-[11px] text-slate-500">Displayed on your header navigation bar and profile badge.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Surname</label>
+          {{ form.surname }}
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Last Name</label>
+          {{ form.last_name }}
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Registered Gmail</label>
+          {{ form.email }}
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-300 mb-1">Phone Contact</label>
+          {{ form.phone_number }}
+        </div>
+      </div>
+
+      <div class="pt-2 flex justify-end gap-3">
+        <button type="submit" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-110 text-slate-950 font-black rounded-xl text-xs sm:text-sm font-display shadow-lg">
+          Save Profile Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

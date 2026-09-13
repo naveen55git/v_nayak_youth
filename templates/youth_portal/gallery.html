@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Photo Gallery - V.NAYAK YOUTH ASSOCIATION{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 border-b border-slate-800 pb-5">
+    <div>
+      <span class="text-xs font-bold uppercase tracking-widest text-amber-400 font-id">Youth Community Moments</span>
+      <h2 class="text-2xl sm:text-3xl font-black text-white font-heading">Association Photo Gallery</h2>
+      <p class="text-xs sm:text-sm text-slate-400 mt-1">Glimpses of youth sports tournaments, social work, and festivals in Madharam Village.</p>
+    </div>
+
+    <div>
+      <button onclick="document.getElementById('modalAddImage').classList.remove('hidden')" class="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-110 text-slate-950 font-black text-xs sm:text-sm transition flex items-center gap-2 shadow-lg shadow-orange-500/20 font-display">
+        <i class="fa-solid fa-camera-retro"></i> Add New Image
+      </button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+    {% for img in images %}
+      <div class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-lg hover:border-amber-500/40 transition group">
+        <div class="h-48 overflow-hidden bg-slate-950 relative">
+          <img src="{{ img.image.url }}" alt="{{ img.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+        </div>
+        <div class="p-3.5">
+          <h4 class="text-xs font-bold text-white line-clamp-1">{{ img.title }}</h4>
+          <span class="text-[10px] text-slate-500 mt-1 block">{{ img.created_at|date:"d M Y" }}</span>
+        </div>
+      </div>
+    {% empty %}
+      <!-- Sample Fallback Cards when gallery is empty -->
+      <div class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-lg p-5 text-center col-span-full py-12 space-y-3">
+        <i class="fa-solid fa-images text-4xl text-slate-600"></i>
+        <p class="text-sm text-slate-400">No gallery images uploaded yet. Be the first to share a moment!</p>
+        <button onclick="document.getElementById('modalAddImage').classList.remove('hidden')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 text-xs font-bold rounded-xl transition">
+          Upload Photo Now
+        </button>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Modal: Add Image -->
+<div id="modalAddImage" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+  <div class="bg-slate-900 border border-amber-500/30 w-full max-w-md rounded-3xl p-6 shadow-2xl relative">
+    <button onclick="document.getElementById('modalAddImage').classList.add('hidden')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <h3 class="text-lg font-black text-white font-heading mb-3">Add Community Photo</h3>
+    
+    <form method="POST" enctype="multipart/form-data" class="space-y-4 text-left">
+      {% csrf_token %}
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1">Image Title / Caption *</label>
+        {{ form.title }}
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1">Select Photo File *</label>
+        {{ form.image }}
+      </div>
+      <button type="submit" class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-110 text-slate-950 font-black rounded-xl text-xs font-display">
+        Upload Image to Gallery
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

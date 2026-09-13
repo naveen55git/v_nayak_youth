@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+
+{% block title %}Membership Portal - V.NAYAK YOUTH MADHARAM{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <a href="{% url 'dashboard' %}" class="text-xs font-semibold text-slate-400 hover:text-white mb-2 inline-flex items-center gap-1.5 transition">
+        <i class="fa-solid fa-chevron-left"></i> Back to Dashboard
+      </a>
+      <h2 class="text-2xl sm:text-3xl font-black text-white font-heading">Youth Membership Portal</h2>
+      <p class="text-slate-400 text-xs sm:text-sm">V.NAYAK YOUTH MADHARAM • Complete the details to generate your certified PVC ID card</p>
+    </div>
+    <a href="{% url 'dashboard' %}" class="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition">
+      <i class="fa-solid fa-xmark"></i>
+    </a>
+  </div>
+
+  {% if form.errors %}
+    <div class="mb-6 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs space-y-1">
+      <div class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-exclamation"></i> Please fix the errors below:</div>
+      <ul class="list-disc pl-5 space-y-0.5">
+        {% for field in form %}
+          {% for error in field.errors %}
+            <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <!-- Membership Input Form -->
+  <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+    <form method="POST" enctype="multipart/form-data" class="space-y-6" id="membershipForm">
+      {% csrf_token %}
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        
+        <!-- Surname -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Surname *</label>
+          {{ form.surname }}
+        </div>
+
+        <!-- Last Name -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Last Name / Given Name *</label>
+          {{ form.last_name }}
+        </div>
+
+        <!-- Caste / Category -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Caste / Category *</label>
+          {{ form.caste }}
+        </div>
+
+        <!-- Aadhaar Number -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Aadhaar No. (12 Digits) *</label>
+          <div class="relative">
+            <input type="text" name="aadhaar_number" id="id_aadhaar_number" value="{{ form.aadhaar_number.value|default:'' }}" maxlength="14" placeholder="XXXX XXXX XXXX" required oninput="formatAadhaar(this)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+            <span class="absolute right-3 top-3.5 text-slate-500 text-xs font-mono" id="aadhaarCount">0/12</span>
+          </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Phone Number *</label>
+          {{ form.phone_number }}
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Registered Gmail *</label>
+          {{ form.email }}
+        </div>
+
+      </div>
+
+      <!-- Photo Upload (STRICT 10 KB to 1 MB) -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+          Member Passport Photo (Strict Limit: 10 KB to 1 MB max | JPG, PNG, WEBP) *
+        </label>
+        <div class="p-4 bg-slate-950 border-2 border-dashed border-slate-800 rounded-2xl flex flex-col sm:flex-row items-center gap-5">
+          <div class="w-24 h-28 bg-slate-900 rounded-xl border border-slate-800 overflow-hidden flex items-center justify-center shrink-0 shadow-inner" id="photoPreviewContainer">
+            {% if user.photo %}
+              <img src="{{ user.photo.url }}" alt="Current Photo" class="w-full h-full object-cover">
+            {% else %}
+              <i class="fa-solid fa-user text-3xl text-slate-600"></i>
+            {% endif %}
+          </div>
+
+          <div class="flex-grow space-y-2 text-center sm:text-left">
+            <input type="file" name="photo" id="id_photo" accept="image/jpeg,image/jpg,image/png,image/webp" onchange="handlePhotoUpload(event)" class="hidden">
+            <div class="flex flex-wrap gap-2 justify-center sm:justify-start">
+              <button type="button" onclick="document.getElementById('id_photo').click()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white rounded-lg border border-slate-700 transition">
+                <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Select Image File
+              </button>
+              <button type="button" onclick="loadDefaultSamplePhoto()" class="px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-xs font-semibold text-amber-300 rounded-lg border border-amber-500/30 transition">
+                Load Quick Test Photo (~28 KB)
+              </button>
+            </div>
+            <p class="text-xs text-slate-400">Accepted formats: .jpg, .jpeg, .png, .webp. File size must strictly be between <strong>10 KB and 1 MB</strong>.</p>
+            <div id="photoFeedback" class="text-xs font-medium"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Residential Local Address -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Residential / Street Address in Madharam Village *</label>
+        {{ form.address }}
+      </div>
+
+      <!-- Submit -->
+      <div class="pt-2">
+        <button type="submit" class="w-full py-4 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 font-black rounded-xl shadow-lg shadow-orange-500/25 transition text-sm font-display tracking-wider uppercase flex items-center justify-center gap-2">
+          <i class="fa-solid fa-id-badge mr-1"></i> Save Details & Generate PVC Card
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function formatAadhaar(input) {
+    let v = input.value.replace(/\D/g, '').slice(0, 12);
+    const countEl = document.getElementById('aadhaarCount');
+    if (countEl) countEl.textContent = `${v.length}/12`;
+    let formatted = '';
+    for (let i = 0; i < v.length; i++) {
+      if (i > 0 && i % 4 === 0) formatted += ' ';
+      formatted += v[i];
+    }
+    input.value = formatted;
+  }
+
+  function handlePhotoUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const sizeKB = file.size / 1024;
+    const feedback = document.getElementById('photoFeedback');
+    const container = document.getElementById('photoPreviewContainer');
+
+    if (sizeKB < 10.0 || sizeKB > 1024.0) {
+      feedback.className = "text-xs font-semibold text-rose-400";
+      feedback.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> File size is <strong>${sizeKB.toFixed(1)} KB</strong>. Rejected! Must be between <strong>10 KB and 1 MB</strong>.`;
+      event.target.value = '';
+      container.innerHTML = '<i class="fa-solid fa-user-xmark text-3xl text-rose-400"></i>';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      feedback.className = "text-xs font-semibold text-emerald-400";
+      feedback.innerHTML = `<i class="fa-solid fa-check-circle mr-1"></i> Valid photo (${sizeKB.toFixed(1)} KB)! Ready for upload.`;
+      container.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function loadDefaultSamplePhoto() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 320;
+    canvas.height = 380;
+    const ctx = canvas.getContext('2d');
+
+    const grad = ctx.createLinearGradient(0, 0, 320, 380);
+    grad.addColorStop(0, '#0f172a');
+    grad.addColorStop(1, '#1e1b4b');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 320, 380);
+
+    ctx.fillStyle = '#f59e0b';
+    ctx.beginPath();
+    ctx.arc(160, 140, 60, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(160, 350, 110, 0, Math.PI, true);
+    ctx.fill();
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 16px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('MADHARAM YOUTH', 160, 235);
+
+    canvas.toBlob(function(blob) {
+      const file = new File([blob], "sample_member_photo.jpg", { type: "image/jpeg" });
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      const fileInput = document.getElementById('id_photo');
+      fileInput.files = dataTransfer.files;
+
+      const approxKB = (file.size / 1024).toFixed(1);
+      const feedback = document.getElementById('photoFeedback');
+      feedback.className = "text-xs font-semibold text-emerald-400";
+      feedback.innerHTML = `<i class="fa-solid fa-check-circle mr-1"></i> Sample photo loaded (${approxKB} KB). Ready for submission.`;
+      document.getElementById('photoPreviewContainer').innerHTML = `<img src="${canvas.toDataURL('image/jpeg')}" class="w-full h-full object-cover">`;
+    }, 'image/jpeg', 0.88);
+  }
+</script>
+{% endblock %}

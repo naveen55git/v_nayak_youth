@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Youth Registration - V.NAYAK YOUTH MADHARAM{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto px-4 py-12">
+  <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+    
+    <div class="text-center mb-6">
+      <div class="w-14 h-14 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl border border-amber-500/30">
+        <i class="fa-solid fa-user-plus"></i>
+      </div>
+      <h2 class="text-2xl font-black text-white font-heading">Youth New Registration</h2>
+      <p class="text-xs text-slate-400 mt-1">V.NAYAK YOUTH MADHARAM • Join our village community</p>
+    </div>
+
+    {% if form.errors %}
+      <div class="mb-5 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs space-y-1">
+        <div class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-exclamation"></i> Please fix the following errors:</div>
+        <ul class="list-disc pl-5 space-y-0.5">
+          {% for field in form %}
+            {% for error in field.errors %}
+              <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+            {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <!-- Surname -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Surname *</label>
+          {{ form.surname }}
+        </div>
+
+        <!-- Last Name -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Last Name / Given Name *</label>
+          {{ form.last_name }}
+        </div>
+      </div>
+
+      <!-- User ID -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Permanent User ID *</label>
+        <div class="relative">
+          <span class="absolute left-3.5 top-2.5 text-amber-400 text-xs font-mono">@</span>
+          {{ form.username }}
+        </div>
+        <p class="text-[10px] text-slate-400 mt-1">Once created, this User ID is permanent.</p>
+      </div>
+
+      <!-- Passwords -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Password *</label>
+          {{ form.password }}
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Confirm Password *</label>
+          {{ form.confirm_password }}
+        </div>
+      </div>
+
+      <!-- Gmail -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Registered Gmail Address *</label>
+        {{ form.email }}
+        <p class="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
+          <i class="fa-solid fa-envelope text-amber-400"></i> Confirmation notice routed to your registered Gmail.
+        </p>
+      </div>
+
+      <!-- Mobile Number -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Phone Number (10 Digits) *</label>
+        <div class="relative">
+          <span class="absolute left-3.5 top-2.5 text-amber-400 text-xs font-mono font-bold">+91</span>
+          <input type="tel" name="phone_number" value="{{ form.phone_number.value|default:'' }}" maxlength="10" required placeholder="9876543210" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-12 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+        </div>
+        <p class="text-[10px] text-slate-400 mt-1">Used for instant 1-tap OTP login verification.</p>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 font-black rounded-xl text-sm shadow-lg shadow-orange-500/25 transition mt-2 font-display uppercase tracking-wider flex items-center justify-center gap-2">
+        <i class="fa-solid fa-paper-plane"></i> Submit Registration
+      </button>
+    </form>
+
+    <div class="mt-6 pt-5 border-t border-slate-800 text-center">
+      <p class="text-xs text-slate-400 mb-2">Already registered with V.NAYAK YOUTH?</p>
+      <a href="{% url 'login_otp' %}" class="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-semibold text-xs rounded-xl transition">
+        <i class="fa-solid fa-mobile-screen"></i> Log in with Mobile OTP
+      </a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
