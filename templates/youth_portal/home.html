@@ -46,8 +46,9 @@
               <i class="fa-solid fa-user-plus"></i> New Registration
             </a>
             <a href="{% url 'login_otp' %}" class="w-full sm:w-auto px-7 py-3.5 rounded-xl font-bold text-sm bg-slate-900 hover:bg-slate-800 text-white border border-amber-500/40 hover:border-amber-400 transition flex items-center justify-center gap-2 font-display">
-              <i class="fa-solid fa-mobile-screen text-amber-400"></i> Mobile OTP Login
+              <i class="fa-solid fa-envelope text-amber-400"></i> Email OTP Login
             </a>
+
             <a href="{% url 'sponsor' %}" class="w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold text-sm bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 transition flex items-center justify-center gap-2 font-display">
               <i class="fa-solid fa-hand-holding-dollar text-emerald-400"></i> Sponsor Us
             </a>
@@ -88,7 +89,7 @@
             </div>
           </div>
         {% else %}
-          <!-- Direct Mobile OTP Login Card -->
+          <!-- Direct Email OTP Login Card -->
           <div class="relative group">
             <div class="absolute -inset-2 bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 rounded-3xl blur-xl opacity-25 group-hover:opacity-40 transition duration-700"></div>
             <div class="relative rounded-3xl bg-slate-900 border border-amber-500/30 p-6 sm:p-7 shadow-2xl space-y-4">
@@ -96,30 +97,33 @@
               <div class="flex items-center justify-between border-b border-slate-800 pb-3">
                 <div class="flex items-center gap-2">
                   <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm">
-                    <i class="fa-solid fa-shield-halved"></i>
+                    <i class="fa-solid fa-envelope-circle-check"></i>
                   </div>
                   <div>
-                    <h3 class="text-sm font-bold text-white font-heading">Quick Mobile OTP Login</h3>
-                    <p class="text-[10px] text-slate-400">Instant passwordless verification</p>
+                    <h3 class="text-sm font-bold text-white font-heading">Quick Email OTP Login</h3>
+                    <p class="text-[10px] text-slate-400">Instant passwordless email verification</p>
                   </div>
                 </div>
-                <span class="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded font-mono font-bold">SECURE</span>
+                <span class="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded font-mono font-bold">FREE OTP</span>
               </div>
 
               <form action="{% url 'login_otp' %}" method="POST" class="space-y-3">
                 {% csrf_token %}
                 <div>
-                  <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Registered Mobile Number *</label>
+                  <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Registered Email Address *</label>
                   <div class="relative">
-                    <span class="absolute left-3.5 top-3 text-amber-400 text-xs font-mono font-bold">+91</span>
-                    <input type="tel" name="phone_number" maxlength="10" required placeholder="10 Digit Number" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-12 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+                    <span class="absolute left-3.5 top-3 text-amber-400 text-xs">
+                      <i class="fa-solid fa-envelope"></i>
+                    </span>
+                    <input type="email" name="email" required placeholder="yourname@gmail.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
                   </div>
                 </div>
 
                 <button type="submit" class="w-full py-3 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-orange-500/20 transition font-display flex items-center justify-center gap-2">
-                  <i class="fa-solid fa-paper-plane"></i> Send Login OTP
+                  <i class="fa-solid fa-paper-plane"></i> Send Email OTP
                 </button>
               </form>
+
 
               <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
                 <span class="text-slate-400">New to the portal?</span>

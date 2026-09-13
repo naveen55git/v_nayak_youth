@@ -60,13 +60,14 @@
           <span class="text-amber-400 font-mono font-bold">@{{ user.username }}</span>
         </div>
         <div>
-          <span class="text-xs text-slate-400 uppercase font-semibold block">Registered Gmail</span>
-          <span class="text-slate-300 font-mono text-xs">{{ user.email }}</span>
+          <span class="text-xs text-slate-400 uppercase font-semibold block">Registered Email (OTP Login)</span>
+          <span class="text-amber-400 font-mono text-xs font-bold">{{ user.email }}</span>
         </div>
         <div>
-          <span class="text-xs text-slate-400 uppercase font-semibold block">Phone Contact (OTP Login)</span>
+          <span class="text-xs text-slate-400 uppercase font-semibold block">Contact Mobile</span>
           <span class="text-slate-300 font-mono">+91 {{ user.phone_number }}</span>
         </div>
+
         <div>
           <span class="text-xs text-slate-400 uppercase font-semibold block">Membership Status</span>
           {% if user.is_membership_active %}

@@ -7,7 +7,7 @@ from django.db.models import Sum
 from .models import User, CommunityFeature, GalleryImage, Festival, Sponsorship, Complaint
 from .forms import (
     YouthRegistrationForm,
-    MobileRequestOTPForm,
+    EmailRequestOTPForm,
     VerifyOTPForm,
     MembershipDetailsForm,
     UserProfileForm,
@@ -18,11 +18,12 @@ from .forms import (
     FestivalForm
 )
 from .services import (
-    generate_and_send_otp,
-    verify_mobile_otp,
-    mask_phone_number,
-    can_resend_otp
+    generate_and_send_email_otp,
+    verify_email_otp,
+    mask_email,
+    can_resend_email_otp
 )
+
 
 
 def home_view(request):
@@ -37,7 +38,8 @@ def home_view(request):
     festivals = Festival.objects.all()[:3]
 
     reg_form = YouthRegistrationForm()
-    login_form = MobileRequestOTPForm()
+    login_form = EmailRequestOTPForm()
+
 
     context = {
         'total_members': total_members,
@@ -179,11 +181,11 @@ def register_view(request):
             messages.success(
                 request,
                 f"Registration successful for {user.get_full_name_custom()}! "
-                f"A verification code has been dispatched to {mask_phone_number(user.phone_number)}."
+                f"A 6-digit verification code has been dispatched to {mask_email(user.email)}."
             )
-            phone = user.phone_number
-            generate_and_send_otp(phone, request, email=user.email)
-            request.session['auth_phone'] = phone
+            email = user.email
+            generate_and_send_email_otp(email, request, user_name=user.get_full_name_custom())
+            request.session['auth_email'] = email
             return redirect('verify_otp')
         else:
             messages.error(request, "Please correct the errors in the registration form.")
@@ -194,43 +196,47 @@ def register_view(request):
 
 
 def request_otp_view(request):
-    """Request a 6-digit OTP sent to registered mobile number for secure login."""
+    """Request a 6-digit OTP sent to registered email address for secure login."""
     if request.user.is_authenticated:
         return redirect('dashboard')
 
     if request.method == 'POST':
-        form = MobileRequestOTPForm(request.POST)
+        form = EmailRequestOTPForm(request.POST)
         if form.is_valid():
-            phone = form.cleaned_data['phone_number']
-            generate_and_send_otp(phone, request)
-            request.session['auth_phone'] = phone
+            email = form.cleaned_data['email']
+            user = User.objects.filter(email=email).first()
+            user_name = user.get_full_name_custom() if user else "Youth Member"
+            generate_and_send_email_otp(email, request, user_name=user_name)
+            request.session['auth_email'] = email
             messages.info(
                 request,
-                f"A 6-digit verification code has been dispatched to {mask_phone_number(phone)}."
+                f"A 6-digit verification code has been sent to {mask_email(email)}."
             )
             return redirect('verify_otp')
         else:
-            messages.error(request, "Please enter a valid registered 10-digit mobile number.")
+            messages.error(request, "Please enter a valid registered email address.")
     else:
-        form = MobileRequestOTPForm()
+        form = EmailRequestOTPForm()
 
     return render(request, 'youth_portal/login_otp.html', {'form': form})
 
 
 def resend_otp_view(request):
-    """Resend a fresh OTP to the pending session mobile number with cooldown rate limiting."""
-    phone = request.session.get('auth_phone')
-    if not phone:
-        messages.warning(request, "Please enter your mobile number first.")
+    """Resend a fresh OTP to the pending session email address with cooldown rate limiting."""
+    email = request.session.get('auth_email')
+    if not email:
+        messages.warning(request, "Please enter your email address first.")
         return redirect('login_otp')
 
-    allowed, remaining = can_resend_otp(phone, cooldown_seconds=30)
+    allowed, remaining = can_resend_email_otp(email, cooldown_seconds=30)
     if not allowed:
         messages.warning(request, f"Please wait {remaining} seconds before requesting another code.")
         return redirect('verify_otp')
 
-    generate_and_send_otp(phone, request)
-    messages.success(request, f"A fresh verification code has been dispatched to {mask_phone_number(phone)}.")
+    user = User.objects.filter(email=email).first()
+    user_name = user.get_full_name_custom() if user else "Youth Member"
+    generate_and_send_email_otp(email, request, user_name=user_name)
+    messages.success(request, f"A fresh verification code has been sent to {mask_email(email)}.")
     return redirect('verify_otp')
 
 
@@ -239,24 +245,24 @@ def verify_otp_view(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
 
-    phone = request.session.get('auth_phone')
-    if not phone:
-        messages.warning(request, "Session expired or no mobile number specified. Please enter mobile number.")
+    email = request.session.get('auth_email')
+    if not email:
+        messages.warning(request, "Session expired or no email specified. Please enter your email.")
         return redirect('login_otp')
 
-    user = User.objects.filter(phone_number=phone).first()
+    user = User.objects.filter(email=email).first()
     if not user:
-        messages.error(request, "No registered account matches this mobile number.")
+        messages.error(request, "No registered account matches this email address.")
         return redirect('login_otp')
 
     if request.method == 'POST':
         form = VerifyOTPForm(request.POST)
         if form.is_valid():
             entered_otp = form.cleaned_data['otp_code']
-            success, msg = verify_mobile_otp(phone, entered_otp)
+            success, msg = verify_email_otp(email, entered_otp)
             if success:
                 login(request, user)
-                request.session.pop('auth_phone', None)
+                request.session.pop('auth_email', None)
                 messages.success(request, f"Welcome back, {user.get_full_name_custom()}! You are now logged in.")
                 return redirect('dashboard')
             else:
@@ -266,10 +272,11 @@ def verify_otp_view(request):
 
     context = {
         'form': form,
-        'phone': phone,
-        'masked_phone': mask_phone_number(phone),
+        'email': email,
+        'masked_email': mask_email(email),
     }
     return render(request, 'youth_portal/verify_otp.html', context)
+
 
 
 

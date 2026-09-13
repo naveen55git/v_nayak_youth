@@ -8,14 +8,15 @@
 
     <div class="text-center mb-6">
       <div class="w-14 h-14 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl border border-amber-500/30 shadow-inner">
-        <i class="fa-solid fa-shield-halved"></i>
+        <i class="fa-solid fa-envelope-circle-check"></i>
       </div>
-      <h2 class="text-2xl font-black text-white font-heading">Enter 6-Digit OTP</h2>
+      <h2 class="text-2xl font-black text-white font-heading">Verify Email OTP</h2>
       <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-        We have dispatched a confidential verification code to <br/>
-        <strong class="text-amber-400 font-mono text-sm tracking-wider">{{ masked_phone }}</strong>
+        We have dispatched a confidential 6-digit verification code to <br/>
+        <strong class="text-amber-400 font-mono text-sm tracking-wider">{{ masked_email }}</strong>
       </p>
     </div>
+
 
     {% if form.errors %}
       <div class="mb-5 p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs">
@@ -55,8 +56,9 @@
         </a>
       </div>
       <a href="{% url 'login_otp' %}" class="text-slate-400 hover:text-white flex items-center gap-1">
-        <i class="fa-solid fa-pen-to-square"></i> Change Mobile Number
+        <i class="fa-solid fa-pen-to-square"></i> Change Email Address
       </a>
+
     </div>
 
   </div>

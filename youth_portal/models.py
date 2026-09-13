@@ -40,8 +40,8 @@ class User(AbstractUser):
         return self.membership_id
 
 
-class MobileOTP(models.Model):
-    phone_number = models.CharField(max_length=15, verbose_name="Phone Number")
+class EmailOTP(models.Model):
+    email = models.EmailField(verbose_name="Registered Email Address")
     otp_code = models.CharField(max_length=6, verbose_name="OTP Code")
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
@@ -51,10 +51,15 @@ class MobileOTP(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"OTP for {self.phone_number}: {self.otp_code} (Used: {self.is_used})"
+        return f"Email OTP for {self.email}: {self.otp_code} (Used: {self.is_used})"
 
     def is_valid(self):
         return not self.is_used and timezone.now() <= self.expires_at
+
+
+# Alias for backwards compatibility
+MobileOTP = EmailOTP
+
 
 
 class CommunityFeature(models.Model):

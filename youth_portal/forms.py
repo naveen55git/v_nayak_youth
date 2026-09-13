@@ -86,25 +86,26 @@ class YouthRegistrationForm(forms.ModelForm):
         return user
 
 
-class MobileRequestOTPForm(forms.Form):
-    phone_number = forms.CharField(
-        max_length=15,
-        widget=forms.TextInput(attrs={
-            'placeholder': 'Enter registered 10-digit mobile number',
-            'maxlength': '10',
+class EmailRequestOTPForm(forms.Form):
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            'placeholder': 'Enter registered Gmail / Email address',
             'class': 'w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition',
             'autofocus': 'autofocus'
         }),
-        label="Mobile Number *"
+        label="Registered Email Address *"
     )
 
-    def clean_phone_number(self):
-        phone = clean_phone_number(self.cleaned_data.get('phone_number', ''))
-        if len(phone) != 10:
-            raise ValidationError("Please enter a valid 10-digit mobile number.")
-        if not User.objects.filter(phone_number=phone).exists():
-            raise ValidationError("No account found with this mobile number. Please register first.")
-        return phone
+    def clean_email(self):
+        email = self.cleaned_data.get('email', '').strip().lower()
+        if not User.objects.filter(email=email).exists():
+            raise ValidationError("No registered account found with this email address. Please register first.")
+        return email
+
+
+# Compatibility alias
+MobileRequestOTPForm = EmailRequestOTPForm
+
 
 
 class VerifyOTPForm(forms.Form):

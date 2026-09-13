@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Mobile OTP Login - V.NAYAK YOUTH MADHARAM{% endblock %}
+{% block title %}Email OTP Login - V.NAYAK YOUTH MADHARAM{% endblock %}
 
 {% block content %}
 <div class="max-w-md mx-auto px-4 py-12">
@@ -13,7 +13,7 @@
       </div>
       <h2 class="text-2xl font-black text-white font-heading">Youth Portal Login</h2>
       <p class="text-xs text-amber-400 mt-1 font-id tracking-wider">V.NAYAK YOUTH MADHARAM</p>
-      <p class="text-xs text-slate-400 mt-1">Instant passwordless login via mobile verification</p>
+      <p class="text-xs text-slate-400 mt-1">Free instant passwordless login via Email OTP verification</p>
     </div>
 
     {% if form.errors %}
@@ -30,18 +30,20 @@
       {% csrf_token %}
 
       <div>
-        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Registered Mobile Number *</label>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Registered Email Address *</label>
         <div class="relative">
-          <span class="absolute left-3.5 top-3 text-amber-400 text-xs font-mono font-bold">+91</span>
-          <input type="tel" name="phone_number" value="{{ form.phone_number.value|default:'' }}" maxlength="10" required autofocus placeholder="10 Digit Mobile Number" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-12 pr-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
+          <span class="absolute left-3.5 top-3.5 text-amber-400 text-sm">
+            <i class="fa-solid fa-envelope"></i>
+          </span>
+          <input type="email" name="email" value="{{ form.email.value|default:'' }}" required autofocus placeholder="yourname@gmail.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 font-mono transition">
         </div>
         <p class="text-[11px] text-slate-400 mt-1.5">
-          Enter the 10-digit mobile number linked to your youth account.
+          Enter your registered Gmail or email address to receive your 6-digit verification code.
         </p>
       </div>
 
       <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-slate-950 font-black rounded-xl text-sm shadow-lg shadow-orange-500/25 transition font-display uppercase tracking-wider flex items-center justify-center gap-2">
-        <i class="fa-solid fa-paper-plane"></i> Send 6-Digit OTP Code
+        <i class="fa-solid fa-paper-plane"></i> Send 6-Digit Email OTP
       </button>
     </form>
 
@@ -55,3 +57,4 @@
   </div>
 </div>
 {% endblock %}
+

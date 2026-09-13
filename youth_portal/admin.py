@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, MobileOTP, CommunityFeature, GalleryImage, Festival, Sponsorship, Complaint
+from .models import User, EmailOTP, CommunityFeature, GalleryImage, Festival, Sponsorship, Complaint
 
 
 @admin.register(User)
@@ -20,11 +20,12 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
-@admin.register(MobileOTP)
-class MobileOTPAdmin(admin.ModelAdmin):
-    list_display = ('phone_number', 'otp_code', 'created_at', 'expires_at', 'is_used', 'is_valid_display')
+@admin.register(EmailOTP)
+class EmailOTPAdmin(admin.ModelAdmin):
+    list_display = ('email', 'otp_code', 'created_at', 'expires_at', 'is_used', 'is_valid_display')
     list_filter = ('is_used', 'created_at')
-    search_fields = ('phone_number', 'otp_code')
+    search_fields = ('email', 'otp_code')
+
 
     def is_valid_display(self, obj):
         return obj.is_valid()
