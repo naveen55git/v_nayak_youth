@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
+    'https://*.lhr.life',
     'https://*.localhost.run',
     'https://*.pinggy.link',
     'https://*.a.pinggy.io',
