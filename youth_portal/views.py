@@ -17,7 +17,12 @@ from .forms import (
     GalleryImageForm,
     FestivalForm
 )
-from .services import generate_and_send_otp, verify_mobile_otp
+from .services import (
+    generate_and_send_otp,
+    verify_mobile_otp,
+    mask_phone_number,
+    can_resend_otp
+)
 
 
 def home_view(request):
@@ -42,8 +47,6 @@ def home_view(request):
         'festivals': festivals,
         'reg_form': reg_form,
         'login_form': login_form,
-        'dev_latest_otp': request.session.get('dev_latest_otp') if settings.DEBUG else None,
-        'dev_otp_phone': request.session.get('dev_otp_phone') if settings.DEBUG else None,
     }
     return render(request, 'youth_portal/home.html', context)
 
@@ -176,11 +179,10 @@ def register_view(request):
             messages.success(
                 request,
                 f"Registration successful for {user.get_full_name_custom()}! "
-                f"An automated confirmation has been dispatched to {user.email}. "
-                f"You can now log in using your registered mobile number (+91 {user.phone_number}) with OTP."
+                f"A verification code has been dispatched to {mask_phone_number(user.phone_number)}."
             )
             phone = user.phone_number
-            generate_and_send_otp(phone, request)
+            generate_and_send_otp(phone, request, email=user.email)
             request.session['auth_phone'] = phone
             return redirect('verify_otp')
         else:
@@ -204,7 +206,7 @@ def request_otp_view(request):
             request.session['auth_phone'] = phone
             messages.info(
                 request,
-                f"OTP has been dispatched to +91 {phone}. Please enter the 6-digit code to continue."
+                f"A 6-digit verification code has been dispatched to {mask_phone_number(phone)}."
             )
             return redirect('verify_otp')
         else:
@@ -216,14 +218,19 @@ def request_otp_view(request):
 
 
 def resend_otp_view(request):
-    """Resend a fresh OTP to the pending session mobile number."""
+    """Resend a fresh OTP to the pending session mobile number with cooldown rate limiting."""
     phone = request.session.get('auth_phone')
     if not phone:
         messages.warning(request, "Please enter your mobile number first.")
         return redirect('login_otp')
 
+    allowed, remaining = can_resend_otp(phone, cooldown_seconds=30)
+    if not allowed:
+        messages.warning(request, f"Please wait {remaining} seconds before requesting another code.")
+        return redirect('verify_otp')
+
     generate_and_send_otp(phone, request)
-    messages.success(request, f"A fresh OTP has been sent to +91 {phone}.")
+    messages.success(request, f"A fresh verification code has been dispatched to {mask_phone_number(phone)}.")
     return redirect('verify_otp')
 
 
@@ -250,8 +257,6 @@ def verify_otp_view(request):
             if success:
                 login(request, user)
                 request.session.pop('auth_phone', None)
-                request.session.pop('dev_latest_otp', None)
-                request.session.pop('dev_otp_phone', None)
                 messages.success(request, f"Welcome back, {user.get_full_name_custom()}! You are now logged in.")
                 return redirect('dashboard')
             else:
@@ -262,9 +267,10 @@ def verify_otp_view(request):
     context = {
         'form': form,
         'phone': phone,
-        'dev_latest_otp': request.session.get('dev_latest_otp') if settings.DEBUG else None,
+        'masked_phone': mask_phone_number(phone),
     }
     return render(request, 'youth_portal/verify_otp.html', context)
+
 
 
 @login_required
